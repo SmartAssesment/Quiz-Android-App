@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Quiz</string>
+    <string name="start_quiz">Start Quiz</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="textview">Question</string>
+    <string name="_5_10">5/10</string>
+    <string name="share">Share</string>
+    <string name="next">Next</string>
+    <string name="level_0">Level 0</string>
+    <string name="end">END</string>
+    <string name="skip">SKIP</string>
+    <string name="level">\Level  \</string>
+    <string name="remaining_time_5_second">Remaining Time :- 5 Second</string>
+    <string name="time">Remaining Time :- </string>
+    <string name="option_a">OPTION A</string>
+    <string name="option_b">OPTION B</string>
+    <string name="option_c">OPTION C</string>
+    <string name="option_d">OPTION D</string>
+</resources>
