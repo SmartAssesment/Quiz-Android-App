@@ -10,8 +10,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
+import com.example.quiz.adapters.BookmarkAdapter;
+import com.example.quiz.models.QuestionModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
