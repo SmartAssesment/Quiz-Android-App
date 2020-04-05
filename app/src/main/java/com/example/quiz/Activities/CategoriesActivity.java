@@ -1,4 +1,4 @@
-package com.example.quiz;
+package com.example.quiz.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +12,9 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.quiz.adapters.CategoryAdapter;
-import com.example.quiz.models.CategoryModel;
+import com.example.quiz.Adapters.CategoryAdapter;
+import com.example.quiz.Models.CategoryModel;
+import com.example.quiz.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

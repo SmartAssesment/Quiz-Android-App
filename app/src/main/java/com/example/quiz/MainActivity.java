@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.quiz.Activities.BookmarkActivity;
+import com.example.quiz.Activities.CategoriesActivity;
+
 public class MainActivity extends AppCompatActivity {
     private Button startBtn,bookmarkBtn;
     @Override
@@ -19,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent categoryIntent = new Intent(MainActivity.this,CategoriesActivity.class);
+                Intent categoryIntent = new Intent(MainActivity.this, CategoriesActivity.class);
                 startActivity(categoryIntent);
             }
         });
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         bookmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bookmarkIntent = new Intent(MainActivity.this,BookmarkActivity.class);
+                Intent bookmarkIntent = new Intent(MainActivity.this, BookmarkActivity.class);
                 startActivity(bookmarkIntent);
             }
         });

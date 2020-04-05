@@ -1,4 +1,4 @@
-package com.example.quiz;
+package com.example.quiz.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,10 +9,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -20,8 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.quiz.models.QuestionDetails;
-import com.example.quiz.models.QuestionModel;
+import com.example.quiz.Models.QuestionDetails;
+import com.example.quiz.Models.QuestionModel;
+import com.example.quiz.Models.StaticQueue;
+import com.example.quiz.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +35,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.tensorflow.lite.Interpreter;
+
+import java.io.FileInputStream;
 import java.lang.reflect.Type;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,20 +58,36 @@ public class QuestionsActivity extends AppCompatActivity {
     private FloatingActionButton bookmarkBtn;
     private LinearLayout optionsContainer;
     private Button nextBtn,skipBtn,endBtn;
-    private int count = 0,position = 0,skip_count = 0,answered = 0,score = 0,correct_count = 0,matchedQuestionPosition,randomQuestion,questionCounter = 0;
+    private int count = 0,position = 0,skip_count = 0,
+            answered = 0,score = 0,correct_count = 0,
+            matchedQuestionPosition,randomQuestion,
+            questionCounter = 0;
     private List<QuestionModel> list;
-    private String courseID,level = "1";
+    private String courseID;
     private Dialog loadingdialog;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Gson gson;
     private List<QuestionModel> bookmarkslist;
+    private boolean lastresponse = false;
+    private StaticQueue sq = new StaticQueue(3);
+    private String level = "1";
+
+//    Tensorflow Interpreter
+    private Interpreter tflite;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
+
+//        First we must create an object of Interpreter
+        try{
+            tflite = new Interpreter(loadModelFile());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         //Linking layout component with variables
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -115,6 +140,7 @@ public class QuestionsActivity extends AppCompatActivity {
         // Start Loading Dialog
         loadingdialog.show();
 
+
         // Getting List of Question Details
         while (questionCounter < 10) {
             myRef.child("Test").child(courseID).child("Levels").child(level).child("ques").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -158,6 +184,7 @@ public class QuestionsActivity extends AppCompatActivity {
                                             nextActivity();
                                         }
                                         count = 0;
+                                        Log.d("Size of List:", String.valueOf(list.size()));
                                         playAnime(question, 0, list.get(position).getQues());
                                     }
                                 });
@@ -207,12 +234,15 @@ public class QuestionsActivity extends AppCompatActivity {
             questionCounter++;
 
             // Generating random level. After adding TensorFlow Lite it will decide next level
-            level = String.valueOf(randomNumberGenerator(11));
-
+            float output[] = getInputValues();
+            int result = doInference(output);
+            level = String.valueOf(result);
+            Log.d("New Level",level);
+            Log.d("Question Counter", String.valueOf(questionCounter));
             // If randomNumberGenerator generate generate 0 then again generate a random number as level 0 is not available
-            if(level.equals("0")){
-                level = String.valueOf(randomNumberGenerator(11));
-            }
+//            if(level.equals("0")){
+//                level = String.valueOf(randomNumberGenerator(11));
+//            }
         }
 
         // Timer For Test
@@ -229,6 +259,15 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         }.start();
 
+    }
+
+    private float[] getInputValues() {
+        float[] input = new float[3];
+        input[0] = Float.parseFloat(level);
+        int lres = lastresponse ? 1 : 0;
+        input[1] =  lres;
+        input[2] = sq.getCount();
+        return input;
     }
 
     @Override
@@ -315,6 +354,7 @@ public class QuestionsActivity extends AppCompatActivity {
         int lvl = Integer.parseInt(list.get(position).getLevel());
         if(selectedoption.getText().toString().equals(list.get(position).getOptions().get(pos))){
             //correct Answer add Score
+            lastresponse = true;
             switch(lvl){
                 case 1:
                     score += 5;
@@ -350,11 +390,14 @@ public class QuestionsActivity extends AppCompatActivity {
             correct_count++;
             selectedoption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00FF00")));
         }else{
+            lastresponse = false;
             //incorrect answer
             selectedoption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
             Button correctoption = (Button) optionsContainer.findViewWithTag(list.get(position).getOptions().get(pos));
             correctoption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00FF00")));
         }
+//        Last Response will be pushed into the queue;
+        sq.queueEnqueue(lastresponse);
     }
 
     // Enabling option for next question
@@ -417,6 +460,41 @@ public class QuestionsActivity extends AppCompatActivity {
         String json = gson.toJson(bookmarkslist);
         editor.putString(KEY_NAME,json);
         editor.commit();
+    }
+
+    //    Memory Map the file in the buffer
+    private MappedByteBuffer loadModelFile() throws Exception{
+//        Open the file
+        AssetFileDescriptor fileDescriptor = this.getAssets().openFd("litemodel.tflite");
+        FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
+        FileChannel fileChannel = inputStream.getChannel();
+        long startOffset = fileDescriptor.getStartOffset();
+        long declaredLength = fileDescriptor.getDeclaredLength();
+        return fileChannel.map(FileChannel.MapMode.READ_ONLY,startOffset,declaredLength);
+    }
+
+    private int doInference(float[] inputvalues) {
+        float output[][] = new float[1][11];
+        tflite.run(inputvalues,output);
+        int inferredval = findclassIndex(output);
+        return inferredval;
+    }
+
+    private int findclassIndex(float[][] output) {
+        float a[] = output[0];
+
+        float max = a[0];
+        int index = 0;
+
+        for (int i = 0; i < a.length; i++)
+        {
+            if (max < a[i])
+            {
+                max = a[i];
+                index = i;
+            }
+        }
+        return index;
     }
 
 }
