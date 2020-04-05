@@ -49,7 +49,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private FloatingActionButton bookmarkBtn;
     private LinearLayout optionsContainer;
     private Button nextBtn,skipBtn,endBtn;
-    private int count = 0,position = 0,skip_count = 0,answered = 0,score = 0,correct_count = 0,matchedQuestionPosition;
+    private int count = 0,position = 0,skip_count = 0,answered = 0,score = 0,correct_count = 0,matchedQuestionPosition,randomQuestion,questionCounter = 0;
     private List<QuestionModel> list;
     private String courseID,level = "1";
     private Dialog loadingdialog;
@@ -116,17 +116,18 @@ public class QuestionsActivity extends AppCompatActivity {
         loadingdialog.show();
 
         // Getting List of Question Details
-        myRef.child("Test").child(courseID).child("Levels").child(level).child("ques").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    questionDetails.add(snapshot.getValue(QuestionDetails.class));
-                }
+        while (questionCounter < 10) {
+            myRef.child("Test").child(courseID).child("Levels").child(level).child("ques").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        questionDetails.add(snapshot.getValue(QuestionDetails.class));
+                    }
 
-                // Loop for iterating through list of questions
-                for(int i = 0; i < questionDetails.size(); i++) {
-                    String tid = String.valueOf(questionDetails.get(i).getTypeId());
-                    myRef.child("Types").child(tid).child(questionDetails.get(i).getqID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    // Loop for iterating through list of questions
+                    randomQuestion = randomNumberGenerator(questionDetails.size());
+                    String tid = String.valueOf(questionDetails.get(randomQuestion).getTypeId());
+                    myRef.child("Types").child(tid).child(questionDetails.get(randomQuestion).getqID()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             // Getting Question Details
@@ -154,7 +155,7 @@ public class QuestionsActivity extends AppCompatActivity {
                                         enableoption(true);
                                         position++;
                                         if (position == list.size()) {
-                                           nextActivity();
+                                            nextActivity();
                                         }
                                         count = 0;
                                         playAnime(question, 0, list.get(position).getQues());
@@ -195,13 +196,24 @@ public class QuestionsActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(QuestionsActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(QuestionsActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // Increasing question Counter as max question should be 10
+            questionCounter++;
+
+            // Generating random level. After adding TensorFlow Lite it will decide next level
+            level = String.valueOf(randomNumberGenerator(11));
+
+            // If randomNumberGenerator generate generate 0 then again generate a random number as level 0 is not available
+            if(level.equals("0")){
+                level = String.valueOf(randomNumberGenerator(11));
             }
-        });
+        }
 
         // Timer For Test
         CountDownTimer countDownTimer = new CountDownTimer(600000, 1000) {
