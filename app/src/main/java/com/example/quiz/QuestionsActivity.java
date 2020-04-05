@@ -154,7 +154,7 @@ public class QuestionsActivity extends AppCompatActivity {
                                         nextBtn.setAlpha(0.7f);
                                         enableoption(true);
                                         position++;
-                                        if (position == list.size()) {
+                                        if (position == 10) {
                                             nextActivity();
                                         }
                                         count = 0;
@@ -167,7 +167,7 @@ public class QuestionsActivity extends AppCompatActivity {
                                     public void onClick(View v) {
                                         enableoption(true);
                                         position++;
-                                        if (position == list.size()) {
+                                        if (position == 10) {
                                             nextActivity();
                                         }
                                         count = 0;
