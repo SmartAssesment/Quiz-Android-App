@@ -258,7 +258,10 @@ public class QuestionsActivity extends AppCompatActivity {
         enableoption(true);
         position = position+1;
         count = 0;
-
+        if(position == 10){
+            loadingdialog.dismiss();
+            nextActivity();
+        }
 //      Generating random level. After adding TensorFlow Lite it will decide next level
         float inputValues[] = getInputValues();
         int result = doInference(inputValues);
