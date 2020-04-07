@@ -14,7 +14,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -43,7 +42,6 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -120,11 +118,11 @@ public class QuestionsActivity extends AppCompatActivity {
         getBookmarks();
 
         // Initializing and formatting Loading Dialog Box
-//        loadingdialog = new Dialog(this);
-//        loadingdialog.setContentView(R.layout.loading);
-//        loadingdialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_corners));
-//        loadingdialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-//        loadingdialog.setCancelable(false);
+        loadingdialog = new Dialog(this);
+        loadingdialog.setContentView(R.layout.loading);
+        loadingdialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_corners));
+        loadingdialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        loadingdialog.setCancelable(false);
 
         qlist = new ArrayList<>();
 
@@ -144,116 +142,11 @@ public class QuestionsActivity extends AppCompatActivity {
         });
 
         // Start Loading Dialog
-//        loadingdialog.show();
+        loadingdialog.show();
 
 //        Load the Question
-        loadQuestionsDetailList(level);
+        loadQuestionsDetailList(level,loadingdialog);
 
-
-        // Getting List of Question Details
-//        while (questionCounter < 10) {
-//            myRef.child("Test").child(courseID).child("Levels").child(level).child("ques").addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        questionDetails.add(snapshot.getValue(QuestionDetails.class));
-//                    }
-//
-//                    // Loop for iterating through list of questions
-//                    randomQuestion = randomNumberGenerator(questionDetails.size());
-//                    String tid = String.valueOf(questionDetails.get(randomQuestion).getTypeId());
-//                    myRef.child("Types").child(tid).child(questionDetails.get(randomQuestion).getqID()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            // Getting Question Details
-//                            QuestionModel questionModel = dataSnapshot.getValue(QuestionModel.class);
-//                            list.add(questionModel);
-//
-//                            if (list.size() > 0) {
-//                                for (int i = 0; i < 4; i++) {
-//                                    optionsContainer.getChildAt(i).setOnClickListener(new View.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(View v) {
-//                                            checkAnswer((Button) v);
-//                                        }
-//                                    });
-//                                }
-
-//
-//                                // Animating Question Loading
-//                                playAnime(question, 0, list.get(position).getQues());
-//
-//                                nextBtn.setOnClickListener(new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View v) {
-//                                        nextBtn.setEnabled(false);
-//                                        nextBtn.setAlpha(0.7f);
-//                                        enableoption(true);
-//                                        position++;
-//                                        if (position == list.size()) {
-//                                            nextActivity();
-//                                        }
-//                                        count = 0;
-//                                        Log.d("Size of List:", String.valueOf(list.size()));
-//                                        playAnime(question, 0, list.get(position).getQues());
-//                                    }
-//                                });
-//
-//                                skipBtn.setOnClickListener(new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View v) {
-//                                        enableoption(true);
-//                                        position++;
-//                                        if (position == list.size()) {
-//                                            nextActivity();
-//                                        }
-//                                        count = 0;
-//                                        playAnime(question, 0, list.get(position).getQues());
-//                                    }
-//                                });
-//
-//                                endBtn.setOnClickListener(new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View v) {
-//                                        nextActivity();
-//                                    }
-//                                });
-//                            } else {
-//                                finish();
-//                                Toast.makeText(QuestionsActivity.this, "No Questions Available", Toast.LENGTH_SHORT).show();
-//                                loadingdialog.dismiss();
-//                                finish();
-//                            }
-//                            loadingdialog.dismiss();
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError databaseError) {
-//                            Toast.makeText(QuestionsActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    Toast.makeText(QuestionsActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//
-//            // Increasing question Counter as max question should be 10
-//            questionCounter++;
-//
-//            // Generating random level. After adding TensorFlow Lite it will decide next level
-////            float output[] = getInputValues();
-////            int result = doInference(output);
-////            level = String.valueOf(result);
-//            Log.d("New Level",level);
-//            Log.d("Question Counter", String.valueOf(questionCounter));
-//            // If randomNumberGenerator generate generate 0 then again generate a random number as level 0 is not available
-//            if(level.equals("0")){
-//                level = String.valueOf(randomNumberGenerator(11));
-//            }
-//        }
 
         // Timer For Test
         CountDownTimer countDownTimer = new CountDownTimer(600000, 1000) {
@@ -272,7 +165,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     //    Return the List of QuestionDetails from Firebase
-    private void loadQuestionsDetailList(final String level) {
+    private void loadQuestionsDetailList(final String level, final Dialog loadingdialog) {
         final List<QuestionDetails> questionDetailsList = new ArrayList<>();
         myRef.child("Test").child(courseID).child("Levels").child(level).child("ques").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -283,10 +176,8 @@ public class QuestionsActivity extends AppCompatActivity {
                 downQuestionDetails.put(level, questionDetailsList);
                 //generate random index using Math.random method
                 int randomindex = getRandomIndex(level, questionDetailsList);
-                Log.d("Random Index", String.valueOf(randomindex));
 //              So Now we have a random Index which was not used for this level, Used this to get the new Index
-                loadQuestion(randomindex, questionDetailsList);
-//                saveData(questionDetailsList);
+                loadQuestion(randomindex, questionDetailsList,loadingdialog);
             }
 
             @Override
@@ -296,7 +187,7 @@ public class QuestionsActivity extends AppCompatActivity {
         });
     }
 
-    private void loadQuestion(int randomindex, List<QuestionDetails> questionDetailsList) {
+    private void loadQuestion(int randomindex, List<QuestionDetails> questionDetailsList, final Dialog loadingdialog) {
         String tid = String.valueOf(questionDetailsList.get(randomindex).getTypeId());
         String qid = questionDetailsList.get(randomindex).getqID();
         myRef.child("Types").child(tid).child(qid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -307,13 +198,12 @@ public class QuestionsActivity extends AppCompatActivity {
                 if (question == null) {
                     finish();
                     Toast.makeText(QuestionsActivity.this, "No Questions Available", Toast.LENGTH_SHORT).show();
-                    loadingdialog.dismiss();
+                    QuestionsActivity.this.loadingdialog.dismiss();
                     finish();
                 }
                 qlist.add(question);
-                displayQuestion();
+                displayQuestion(loadingdialog);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(QuestionsActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
@@ -322,22 +212,21 @@ public class QuestionsActivity extends AppCompatActivity {
 
     }
 
-    private void displayQuestion() {
+    private void displayQuestion(final Dialog loadingdialog) {
         // Animating Question Loading
-        Log.d("Position", String.valueOf(position));
         playAnime(question, 0, qlist.get(position).getQues());
-//        Handle Listner For Next Button
+//        Handle Listener For Next Button
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleNextButtonClick();
+                handleNextButtonClick(loadingdialog);
             }
         });
-//        Handle Listner for Skip Question
+//        Handle Listener for Skip Question
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleSkipButtonClick();
+                handleSkipButtonClick(loadingdialog);
             }
         });
 //        Handle for Exit Button
@@ -347,23 +236,23 @@ public class QuestionsActivity extends AppCompatActivity {
                 nextActivity();
             }
         });
-
-        setOptionsListner();
-
+//        Add Listener to the Options
+        setOptionsListener();
+        loadingdialog.dismiss();
     }
 
-    private void handleSkipButtonClick() {
+    private void handleSkipButtonClick(Dialog loadingdialog) {
         enableoption(true);
         position++;
         count = 0;
 
         List<QuestionDetails> questionDetailsList = downQuestionDetails.get(level);
         int randomindex = getRandomIndex(level,questionDetailsList);
-        loadQuestion(randomindex,questionDetailsList);
+        loadQuestion(randomindex,questionDetailsList, loadingdialog);
 
     }
 
-    private void handleNextButtonClick() {
+    private void handleNextButtonClick(Dialog loadingdialog) {
         nextBtn.setEnabled(false);
         nextBtn.setAlpha(0.7f);
         enableoption(true);
@@ -372,9 +261,6 @@ public class QuestionsActivity extends AppCompatActivity {
 
 //      Generating random level. After adding TensorFlow Lite it will decide next level
         float inputValues[] = getInputValues();
-        Log.d("Input Values 1", String.valueOf(inputValues[0]));
-        Log.d("Input Values 2", String.valueOf(inputValues[1]));
-        Log.d("Input Values 3", String.valueOf(inputValues[2]));
         int result = doInference(inputValues);
         String templevel = level;
         level = String.valueOf(result);
@@ -385,23 +271,20 @@ public class QuestionsActivity extends AppCompatActivity {
             sq.queueDequeue();
             sq.queueDequeue();
         }
-        Log.d("Level",level);
 //        Check if we have this level data
         if(downQuestionDetails.containsKey(level)){
-            Log.d("TAG","Already have the data downloded");
 //            If they already downloaded the data retrieve it and get a new random question
             List<QuestionDetails> questionDetailsList = downQuestionDetails.get(level);
             int randomindex = getRandomIndex(level,questionDetailsList);
-            Log.d("New Random Index", String.valueOf(randomindex));
-            loadQuestion(randomindex,questionDetailsList);
+            loadQuestion(randomindex,questionDetailsList, loadingdialog);
         }
         else{
 //            if this level has not been downloaded
-            loadQuestionsDetailList(level);
+            loadQuestionsDetailList(level, loadingdialog);
         }
     }
 
-    private void setOptionsListner() {
+    private void setOptionsListener() {
         for (int i = 0; i < 4; i++) {
             optionsContainer.getChildAt(i).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -414,26 +297,22 @@ public class QuestionsActivity extends AppCompatActivity {
 
     private int getRandomIndex(String level, List<QuestionDetails> questionDetailsList) {
         int randomIndex = (int) (Math.random() * questionDetailsList.size());
-        Log.d("Calculated Random", String.valueOf(randomIndex));
         List<Integer> randomIndexList = usedRandomList.get(level);
 
         if (randomIndexList == null) {
-            Log.d("Random List is"," Null");
 //          initiallise the list with first value;
             randomIndexList = new ArrayList<>();
             randomIndexList.add(randomIndex);
             usedRandomList.put(level, randomIndexList);
         } else {
-            Log.d("Random List is"," Not Null");
 //          It contains element, So check if the randomindex produce already contain in the list if not then produce the new number
             if(randomIndexList.contains(randomIndex)) {
-//                        Get a new Random number
+//              Get a new Random number
                 int newIndex = (int) (Math.random() * questionDetailsList.size());
                 while(true){
                     if(newIndex != randomIndex)
                         break;
                     newIndex = (int) (Math.random() * questionDetailsList.size());
-                    Log.d("New Index Calculated:", String.valueOf(newIndex));
                 }
                 randomIndex = newIndex;
             }
@@ -442,15 +321,6 @@ public class QuestionsActivity extends AppCompatActivity {
             usedRandomList.put(level, randomIndexList);  //rewrite the arraylist again
         }
         return randomIndex;
-    }
-
-    private void saveData(List<QuestionDetails> questionDetailsList) {
-        Iterator<QuestionDetails> questionDetailsIterator = questionDetailsList.iterator();
-        while (questionDetailsIterator.hasNext()) {
-            Log.d("QID:", questionDetailsIterator.next().getqID());
-        }
-        Log.d("Size", String.valueOf(questionDetailsList.size()));
-
     }
 
     private float[] getInputValues() {
