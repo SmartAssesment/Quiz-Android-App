@@ -1,4 +1,4 @@
-package com.example.quiz.models;
+package com.example.quiz.Models;
 
 public class CategoryModel {
     public String url,name,courseID;
