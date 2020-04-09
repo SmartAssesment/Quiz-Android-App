@@ -16,4 +16,54 @@
     <string name="option_b">OPTION B</string>
     <string name="option_c">OPTION C</string>
     <string name="option_d">OPTION D</string>
+    <string name="score">Score</string>
+    <string name="_5">5</string>
+    <string name="out_of_10">Out of 10</string>
+    <string name="done">Done</string>
+    <string name="what_is_your_experience_in_terms_of_programming_or_coding">What is your Experience in terms of Programming or Coding?</string>
+    <string name="what_is_your_expectation_from_this_application">What is your Expectation from this application?</string>
+    <string name="what_type_of_person_are_you">What type of person are you?</string>
+    <string name="welcome_text">Welcome To Skill Assesment</string>
+    <string name="login">Login</string>
+    <string name="design">Design</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forgot_your_password">Forgot Your Password</string>
+    <string name="login_with_google">LOGIN WITH GOOGLE</string>
+    <string name="passhint">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="full_name">Full Name</string>
+    <string name="retype_password">Retype Password</string>
+    <string name="submit">Submit</string>
+
+    <string-array name="experince_array">
+        <item>0 years</item>
+        <item>1-2 years</item>
+        <item>2-4 years</item>
+        <item>4-6 years</item>
+    </string-array>
+
+    <string-array name="expectation_array">
+        <item>For the purpose of jobs</item>
+        <item>To enhance Skills in Programming or Coding</item>
+        <item>Begineers</item>
+    </string-array>
+
+    <string-array name="type_of_person_array">
+        <item>Do You love Practical Knowledge</item>
+        <item>Do You like innovating new things</item>
+        <item>Do you like researching and analysis</item>
+        <item>Or just Head on</item>
+    </string-array>
+
+    <string-array name="idea_array">
+        <item>Own Ideas</item>
+        <item>Others Ideas</item>
+    </string-array>
+
+    <string-array name="curiosity_array">
+        <item>Learning new Things</item>
+        <item>Exploring the existing things</item>
+    </string-array>
 </resources>

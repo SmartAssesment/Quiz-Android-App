@@ -35,7 +35,7 @@
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:textAlignment="center"
-            android:text="Score" />
+            android:text="@string/score" />
 
         <TextView
             android:id="@+id/correct_count"
@@ -45,7 +45,7 @@
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:textAlignment="center"
-            android:text="5" />
+            android:text="@string/_5" />
 
         <TextView
             android:id="@+id/skip_count"
@@ -56,7 +56,7 @@
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:textAlignment="center"
-            android:text="Out of 10" />
+            android:text="@string/out_of_10" />
     </LinearLayout>
 
     <FrameLayout
@@ -70,6 +70,6 @@
         android:textColor="@android:color/white"
         android:background="@drawable/rounded_corners"
         android:layout_gravity="center"
-        android:text="Done" />
+        android:text="@string/done" />
     </FrameLayout>
 </LinearLayout>

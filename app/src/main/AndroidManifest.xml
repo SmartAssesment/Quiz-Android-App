@@ -11,17 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BookmarkActivity"></activity>
-        <activity android:name=".ScoreActivity" />
-        <activity android:name=".QuestionsActivity" />
-        <activity android:name=".CategoriesActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".RegisterActivity"
+            android:theme="@style/AppTheme.FullScreen">
+
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SurveyActivity" />
+        <activity android:name=".BookmarkActivity" />
+        <activity android:name=".ScoreActivity" />
+        <activity android:name=".QuestionsActivity" />
+        <activity android:name=".CategoriesActivity" />
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>

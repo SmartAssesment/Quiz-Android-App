@@ -51,8 +51,8 @@ public class QuestionsActivity extends AppCompatActivity {
     private Button nextBtn,skipBtn,endBtn;
     private int count = 0,position = 0,skip_count = 0,answered = 0,score = 0,correct_count = 0,matchedQuestionPosition,randomQuestion,questionCounter = 0;
     private List<QuestionModel> list;
-    private String courseID,level = "1";
-    private Dialog loadingdialog;
+    private String level = "1";
+    private Dialog loading;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Gson gson;
@@ -63,6 +63,9 @@ public class QuestionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
+
+        // Hide Status Bar
+        hideNavigationBar();
 
         //Linking layout component with variables
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -88,16 +91,16 @@ public class QuestionsActivity extends AppCompatActivity {
         getBookmarks();
 
         // Initializing and formatting Loading Dialog Box
-        loadingdialog = new Dialog(this);
-        loadingdialog.setContentView(R.layout.loading);
-        loadingdialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_corners));
-        loadingdialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-        loadingdialog.setCancelable(false);
+        loading = new Dialog(this);
+        loading.setContentView(R.layout.loading);
+        loading.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_corners));
+        loading.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        loading.setCancelable(false);
 
         list = new ArrayList<>();
         final List<QuestionDetails> questionDetails = new ArrayList<>();
 
-        courseID = getIntent().getStringExtra("CourseID");
+        String courseID = getIntent().getStringExtra("CourseID");
 
         bookmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +116,7 @@ public class QuestionsActivity extends AppCompatActivity {
         });
 
         // Start Loading Dialog
-        loadingdialog.show();
+        loading.show();
 
         // Getting List of Question Details
         while (questionCounter < 10) {
@@ -184,10 +187,10 @@ public class QuestionsActivity extends AppCompatActivity {
                             } else {
                                 finish();
                                 Toast.makeText(QuestionsActivity.this, "No Questions Available", Toast.LENGTH_SHORT).show();
-                                loadingdialog.dismiss();
+                                loading.dismiss();
                                 finish();
                             }
-                            loadingdialog.dismiss();
+                            loading.dismiss();
                         }
 
                         @Override
@@ -232,9 +235,28 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        hideNavigationBar();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         storeBookmarks();
+    }
+
+    //For Hiding Navigation Bar and Status Bar
+    private void hideNavigationBar(){
+        this.getWindow().getDecorView()
+                .setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_FULLSCREEN |
+                                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+                                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                );
     }
 
     // For applying Animation for loading of question

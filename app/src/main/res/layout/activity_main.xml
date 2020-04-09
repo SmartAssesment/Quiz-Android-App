@@ -24,6 +24,14 @@
             android:textStyle="bold"
             android:textSize="42sp"
             android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/survey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Survey"
+            android:layout_margin="50dp"
+            android:background="@drawable/rounded_corners"/>
     </FrameLayout>
 
     <Button

@@ -2,46 +2,48 @@ package com.example.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-    private Button startBtn,bookmarkBtn,survey;
+public class LoginActivity extends AppCompatActivity {
+
+    private TextView tvLogin;
+    private Button login;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         // Hide Status Bar
         hideNavigationBar();
 
-        startBtn = findViewById(R.id.start_btn);
-        bookmarkBtn = findViewById(R.id.bookmarks_btn);
-        survey = findViewById(R.id.survey);
+        ImageButton btRegister = findViewById(R.id.btRegister);
+        tvLogin = findViewById(R.id.tvLogin);
+        login = findViewById(R.id.btLogin);
 
-        startBtn.setOnClickListener(new View.OnClickListener() {
+        btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent categoryIntent = new Intent(MainActivity.this,CategoriesActivity.class);
-                startActivity(categoryIntent);
+                Intent regisstationIntent = new Intent(LoginActivity.this,RegisterActivity.class);
+                Pair[]  pairs = new Pair[1];
+                pairs[0] = new Pair<View,String>(tvLogin,"tvLogin");
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this,pairs);
+                startActivity(regisstationIntent,activityOptions.toBundle());
             }
         });
 
-        bookmarkBtn.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bookmarkIntent = new Intent(MainActivity.this,BookmarkActivity.class);
-                startActivity(bookmarkIntent);
-            }
-        });
-
-        survey.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent surveyIntent = new Intent(MainActivity.this,SurveyActivity.class);
-                startActivity(surveyIntent);
+                Intent dashboardIntent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(dashboardIntent);
             }
         });
     }

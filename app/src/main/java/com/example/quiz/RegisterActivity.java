@@ -1,38 +1,34 @@
 package com.example.quiz;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 
-public class ScoreActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_score);
+        setContentView(R.layout.activity_register);
 
         // Hide Status Bar
         hideNavigationBar();
 
-        TextView correctCount = findViewById(R.id.correct_count);
-        TextView skipCount = findViewById(R.id.skip_count);
-        Button doneBtn = findViewById(R.id.done_btn);
-        TextView totalscore = findViewById(R.id.totalscore);
+        Toolbar toolbar = findViewById(R.id.bgHeader);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        totalscore.setText("Total Score:- " + String.valueOf(getIntent().getIntExtra("score",0)));
-        correctCount.setText("Correct Answers:- " + String.valueOf(getIntent().getIntExtra("correct_count",0)));
-        skipCount.setText("Skipped Questions:- " + String.valueOf(getIntent().getIntExtra("skip_count",0)));
-
-
-        doneBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        RelativeLayout rlayout = findViewById(R.id.rlayout);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.uptodowndiagonal);
+        rlayout.setAnimation(animation);
     }
 
     @Override
@@ -52,5 +48,15 @@ public class ScoreActivity extends AppCompatActivity {
                                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
                                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 );
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
