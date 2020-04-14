@@ -1,4 +1,4 @@
-package com.example.quiz.Activities;
+package com.example.quiz.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +11,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.quiz.Adapters.BookmarkAdapter;
-import com.example.quiz.Models.QuestionModel;
+import com.example.quiz.adapters.BookmarkAdapter;
+import com.example.quiz.models.QuestionModel;
 import com.example.quiz.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,8 +21,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.quiz.Activities.QuestionsActivity.FILE_NAME;
-import static com.example.quiz.Activities.QuestionsActivity.KEY_NAME;
+import static com.example.quiz.activities.QuestionsActivity.FILE_NAME;
+import static com.example.quiz.activities.QuestionsActivity.KEY_NAME;
 
 public class BookmarkActivity extends AppCompatActivity {
 

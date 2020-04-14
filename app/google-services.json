@@ -8,9 +8,83 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:415220481022:android:700ac0bcf231e34f6cdeaf",
+        "android_client_info": {
+          "package_name": "com.example.be_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "415220481022-0o8rm99e5vuov09e0q2vmj8uj2j6vbpd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.be_project",
+            "certificate_hash": "d720ef8223ebf4476dfb23b1f308952e125e49ee"
+          }
+        },
+        {
+          "client_id": "415220481022-vkkh4t74t3kdki3acap5fujjn9f54qel.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaXXXXXXXXXXXXXXXXXARmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415220481022-vkkh4t74t3kdki3acap5fujjn9f54qel.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:415220481022:android:610abdb9750cb5cb6cdeaf",
         "android_client_info": {
           "package_name": "com.example.quiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "415220481022-s1gbodpgl8kvd4fvlj69jv0nha3s5f6i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quiz",
+            "certificate_hash": "80652c20147c334d84b46b1c645a44c0de803dac"
+          }
+        },
+        {
+          "client_id": "415220481022-vkkh4t74t3kdki3acap5fujjn9f54qel.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDqnXE_REJ_8-SUP63C5SgLoCq9RmARmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415220481022-vkkh4t74t3kdki3acap5fujjn9f54qel.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415220481022:android:5f689291ed7f7bf76cdeaf",
+        "android_client_info": {
+          "package_name": "com.example.quizadmin"
         }
       },
       "oauth_client": [
@@ -21,7 +95,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaXXXXXXXXXXXXXXXXXARmY"
+          "current_key": "AIzaSyCDqnXE_REJ_8-SUP63C5SgLoCq9RmARmY"
         }
       ],
       "services": {

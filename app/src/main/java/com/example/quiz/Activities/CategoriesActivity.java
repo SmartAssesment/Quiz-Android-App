@@ -1,4 +1,4 @@
-package com.example.quiz.Activities;
+package com.example.quiz.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.quiz.Adapters.CategoryAdapter;
-import com.example.quiz.Models.CategoryModel;
+import com.example.quiz.adapters.CategoryAdapter;
+import com.example.quiz.models.CategoryModel;
 import com.example.quiz.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +29,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private Dialog loadingdialog;
+    private View decorView;
 
     // Firebase reference initialization
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -40,8 +41,16 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        // Hide Status Bar
-        hideNavigationBar();
+        // For Full Experince
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if(visibility == 0){
+                    decorView.setSystemUiVisibility(hideNavigationBar());
+                }
+            }
+        });
 
         // Setting Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -94,9 +103,21 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        hideNavigationBar();
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            decorView.setSystemUiVisibility(hideNavigationBar());
+        }
+    }
+
+    //For Hiding Navigation Bar and Status Bar
+    private int hideNavigationBar(){
+        return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
     }
 
     @Override
@@ -105,18 +126,5 @@ public class CategoriesActivity extends AppCompatActivity {
                 finish();
             }
         return super.onOptionsItemSelected(item);
-    }
-
-    //For Hiding Navigation Bar and Status Bar
-    private void hideNavigationBar(){
-        this.getWindow().getDecorView()
-                .setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_FULLSCREEN |
-                                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
-                                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                );
     }
 }

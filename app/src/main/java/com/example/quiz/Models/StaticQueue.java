@@ -1,4 +1,4 @@
-package com.example.quiz.Models;
+package com.example.quiz.models;
 
 public class StaticQueue {
     private  int front, rear, capacity;

@@ -1,4 +1,4 @@
-package com.example.quiz.Activities;
+package com.example.quiz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,13 +11,23 @@ import com.example.quiz.R;
 
 public class ScoreActivity extends AppCompatActivity {
 
+    private View decorView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
 
-        // Hide Status Bar
-        hideNavigationBar();
+        // For Full Experince
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if(visibility == 0){
+                    decorView.setSystemUiVisibility(hideNavigationBar());
+                }
+            }
+        });
 
         TextView correctCount = findViewById(R.id.correct_count);
         TextView skipCount = findViewById(R.id.skip_count);
@@ -38,21 +48,20 @@ public class ScoreActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        hideNavigationBar();
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            decorView.setSystemUiVisibility(hideNavigationBar());
+        }
     }
 
     //For Hiding Navigation Bar and Status Bar
-    private void hideNavigationBar(){
-        this.getWindow().getDecorView()
-                .setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_FULLSCREEN |
-                                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
-                                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                );
+    private int hideNavigationBar(){
+        return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
     }
 }
