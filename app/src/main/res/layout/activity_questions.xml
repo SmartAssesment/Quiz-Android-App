@@ -4,17 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.QuestionsActivity">
+    tools:context=".activities.QuestionsActivity">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".QuestionsActivity">
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".QuestionsActivity">
+    tools:context=".activities.QuestionsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

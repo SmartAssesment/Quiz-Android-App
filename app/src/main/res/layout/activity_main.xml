@@ -7,38 +7,40 @@
     tools:context=".MainActivity">
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorPrimary"
-        android:layout_marginBottom="64dp"
-        app:layout_constraintBottom_toTopOf="@+id/start_btn"
+        app:layout_constraintBottom_toTopOf="@+id/survey"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/app_name"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
             android:textSize="42sp"
-            android:layout_gravity="center"/>
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/survey"
+            android:id="@+id/btLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Survey"
-            android:layout_margin="50dp"
-            android:background="@drawable/rounded_corners"/>
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rounded_corners"
+            android:text="@string/logout" />
     </FrameLayout>
 
     <Button
         android:id="@+id/start_btn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/rounded_corners"
         android:stateListAnimator="@null"
         android:text="@string/start_quiz"
@@ -63,5 +65,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/survey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_corners"
+        android:text="@string/survey"
+        app:layout_constraintBottom_toTopOf="@+id/start_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

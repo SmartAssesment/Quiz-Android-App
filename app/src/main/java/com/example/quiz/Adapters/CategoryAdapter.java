@@ -1,4 +1,4 @@
-package com.example.quiz.Adapters;
+package com.example.quiz.adapters;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.quiz.Models.CategoryModel;
-import com.example.quiz.Activities.QuestionsActivity;
+import com.example.quiz.models.CategoryModel;
+import com.example.quiz.activities.QuestionsActivity;
 import com.example.quiz.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
 

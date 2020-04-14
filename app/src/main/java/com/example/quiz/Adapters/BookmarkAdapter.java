@@ -1,4 +1,4 @@
-package com.example.quiz.Adapters;
+package com.example.quiz.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.quiz.Models.QuestionModel;
+import com.example.quiz.models.QuestionModel;
 import com.example.quiz.R;
 
 import java.util.List;

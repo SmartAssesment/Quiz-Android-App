@@ -1,4 +1,4 @@
-package com.example.quiz.Activities;
+package com.example.quiz.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.quiz.Models.QuestionDetails;
-import com.example.quiz.Models.QuestionModel;
-import com.example.quiz.Models.StaticQueue;
+import com.example.quiz.models.QuestionDetails;
+import com.example.quiz.models.QuestionModel;
+import com.example.quiz.models.StaticQueue;
 import com.example.quiz.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -50,7 +50,7 @@ import static android.view.View.INVISIBLE;
 
 public class QuestionsActivity extends AppCompatActivity {
 
-
+    private View decorView;
     public static final String FILE_NAME = "Quiz";
     public static final String KEY_NAME = "Questions";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -87,14 +87,25 @@ public class QuestionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
 
-//        First we must create an object of Interpreter
+        // For Full Experince
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if(visibility == 0){
+                    decorView.setSystemUiVisibility(hideNavigationBar());
+                }
+            }
+        });
+
+        // First we must create an object of Interpreter
         try {
             tflite = new Interpreter(loadModelFile());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        //Linking layout component with variables
+        // Linking layout component with variables
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -162,6 +173,24 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         }.start();
 
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            decorView.setSystemUiVisibility(hideNavigationBar());
+        }
+    }
+
+    //For Hiding Navigation Bar and Status Bar
+    private int hideNavigationBar(){
+        return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
     }
 
     //    Return the List of QuestionDetails from Firebase

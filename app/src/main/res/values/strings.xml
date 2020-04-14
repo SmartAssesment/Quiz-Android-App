@@ -26,16 +26,18 @@
     <string name="welcome_text">Welcome To Skill Assesment</string>
     <string name="login">Login</string>
     <string name="design">Design</string>
-    <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="forgot_your_password">Forgot Your Password</string>
+    <string name="forgot_password">Forgot Password</string>
     <string name="login_with_google">LOGIN WITH GOOGLE</string>
     <string name="passhint">Password</string>
     <string name="sign_up">Sign Up</string>
     <string name="email">Email</string>
-    <string name="full_name">Full Name</string>
     <string name="retype_password">Retype Password</string>
     <string name="submit">Submit</string>
+    <string name="send_email">Send Email</string>
+    <string name="survey">Survey</string>
+    <string name="logout">Logout</string>
+    <string name="first_and_last_name">First And Last Name</string>
 
     <string-array name="experince_array">
         <item>0 years</item>
