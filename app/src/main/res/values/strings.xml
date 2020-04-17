@@ -38,6 +38,7 @@
     <string name="survey">Survey</string>
     <string name="logout">Logout</string>
     <string name="first_and_last_name">First And Last Name</string>
+<!--    <string name="default_web_client_id">415220481022-0o8rm99e5vuov09e0q2vmj8uj2j6vbpd.apps.googleusercontent.com</string>-->
 
     <string-array name="experince_array">
         <item>0 years</item>
