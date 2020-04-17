@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaXXXXXXXXXXXXXXXXXARmY"
+          "current_key": "AIzaSyCDqnXE_REJ_8-SUP63C5SgLoCq9RmARmY"
         }
       ],
       "services": {
@@ -51,6 +51,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "415220481022-ooc368rfukk8dtfk0lahlr3ohk7qfh09.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quiz",
+            "certificate_hash": "735fd4b51e0bd2f88a4d7d9bc04b4dbdc32af9c8"
+          }
+        },
         {
           "client_id": "415220481022-s1gbodpgl8kvd4fvlj69jv0nha3s5f6i.apps.googleusercontent.com",
           "client_type": 1,

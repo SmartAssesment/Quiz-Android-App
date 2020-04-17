@@ -102,35 +102,40 @@ public class RegisterActivity extends AppCompatActivity {
                 loadingdialog.show();
 
                 if(password.equals(rpassword)){
-                    firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    createNewUser();
+
+                }
+            }
+        });
+    }
+
+    private void createNewUser() {
+        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    //send verification mail
+                    firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                        public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                //send verification mail
-                                firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            Toast.makeText(RegisterActivity.this, "Registration Successful. Please Check your email for verification.", Toast.LENGTH_SHORT).show();
-                                            Intent loginIntent = new Intent(RegisterActivity.this,LoginActivity.class);
-                                            loginIntent.putExtra("usrname",name);
-                                            startActivity(loginIntent);
-                                            finish();
-                                        }else {
-                                            Toast.makeText(RegisterActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                                            loadingdialog.dismiss();
-                                        }
-                                    }
-                                });
-                            }
-                            else{
+                                Toast.makeText(RegisterActivity.this, "Registration Successful. Please Check your email for verification.", Toast.LENGTH_SHORT).show();
+                                Intent loginIntent = new Intent(RegisterActivity.this,LoginActivity.class);
+                                loginIntent.putExtra("usrname",name);
+                                startActivity(loginIntent);
+                                finish();
+                            }else {
                                 Toast.makeText(RegisterActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                                 loadingdialog.dismiss();
                             }
-
                         }
                     });
                 }
+                else{
+                    Toast.makeText(RegisterActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                    loadingdialog.dismiss();
+                }
+
             }
         });
     }
