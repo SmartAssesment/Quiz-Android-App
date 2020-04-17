@@ -222,7 +222,7 @@ public class LoginActivity extends AppCompatActivity {
 //                    User Data Already Exist So go to Dashboard
                     Log.d("User Exist", user.getDisplayName());
                     Intent mainIntent = new Intent(LoginActivity.this,MainActivity.class);
-                    mainIntent.putExtra("usremail",uemail);
+                    mainIntent.putExtra("userid",username);
                     startActivity(mainIntent);
                     finish();
                 } else {
@@ -231,7 +231,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("User Don't Exist", user.getDisplayName());
                     // Your previous code here.
                     Intent surveyIntent = new Intent(LoginActivity.this,SurveyActivity.class);
-                    surveyIntent.putExtra("usremail",uemail);
+                    surveyIntent.putExtra("userid",username);
                     startActivity(surveyIntent);
                     finish();
                 }

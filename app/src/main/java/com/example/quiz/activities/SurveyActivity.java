@@ -127,10 +127,10 @@ public class SurveyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 surveyid = myRef.child("SurveyHistory").push().getKey();
                 testhistoryid = myRef.child("TestHistory").push().getKey();
-                String parts[] = getIntent().getStringExtra("usremail").split("@");
-                UserModel userModel = new UserModel("0",parts[0],"1"," ",surveyid,testhistoryid);
-                myRef.child("Users").child(parts[0]).setValue(userModel);
-                SurveyModel surveyModel = new SurveyModel(parts[0],surveydetails);
+                String uid = getIntent().getStringExtra("userid");
+                UserModel userModel = new UserModel("0",uid,"1"," ",surveyid,testhistoryid);
+                myRef.child("Users").child(uid).setValue(userModel);
+                SurveyModel surveyModel = new SurveyModel(uid,surveydetails);
                 myRef.child("SurveyHistory").child(surveyid).setValue(surveyModel);
                 Toast.makeText(SurveyActivity.this, "Response Recorded Successfully", Toast.LENGTH_SHORT).show();
                 Intent mainIntent = new Intent(SurveyActivity.this, MainActivity.class);
