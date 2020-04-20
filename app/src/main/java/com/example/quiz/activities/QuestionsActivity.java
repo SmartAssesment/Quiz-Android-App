@@ -27,6 +27,7 @@ import com.example.quiz.models.QuestionModel;
 import com.example.quiz.models.StaticQueue;
 import com.example.quiz.R;
 import com.example.quiz.models.SurveyModel;
+import com.example.quiz.models.TestHistoryModel;
 import com.example.quiz.models.UserModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,8 +82,11 @@ public class QuestionsActivity extends AppCompatActivity {
     private String level;
 //    Firebase Auth
     private FirebaseAuth mAuth;
+    private FirebaseUser fuser;
 //    Survey Response;
     private List<String> surveyresponses;
+    private UserModel userModel;
+    private List<TestHistoryModel> testHistoryModelList = new ArrayList<>();
 
     //    Tensorflow Interpreter
     private Interpreter tflite;
@@ -189,14 +193,14 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void loadSurveyResponse() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String uid = user.getUid();
+        fuser = mAuth.getCurrentUser();
+        String uid = fuser.getUid();
         myRef.child("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserModel user = dataSnapshot.getValue(UserModel.class);
-                String surveyId = user.getUsurveyId();
-                level = user.getUlevel();
+                userModel = dataSnapshot.getValue(UserModel.class);
+                String surveyId = userModel.getUsurveyId();
+                level = userModel.getUlevel();
                 myRef.child("SurveyHistory").child(surveyId).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -548,6 +552,14 @@ public class QuestionsActivity extends AppCompatActivity {
         }
 //        Last Response will be pushed into the queue;
         sq.queueEnqueue(lastresponse);
+
+//        Update TestHistoryModelList
+        updateTestHistoryModelList(lastresponse);
+    }
+
+    private void updateTestHistoryModelList(boolean lastresponse) {
+        TestHistoryModel testHistoryModel = new TestHistoryModel(qlist.get(position).getTypeId(),qlist.get(position).getqID(),lastresponse);
+        testHistoryModelList.add(testHistoryModel);
     }
 
     // Enabling option for next question
@@ -563,6 +575,8 @@ public class QuestionsActivity extends AppCompatActivity {
     // Moving to next activity
     private void nextActivity() {
         //score Activity
+        saveTestResult();
+        saveUserLevel();
         skip_count = qlist.size() - answered;
         Intent scoreIntent = new Intent(QuestionsActivity.this, ScoreActivity.class);
         scoreIntent.putExtra("score", score);
@@ -572,6 +586,17 @@ public class QuestionsActivity extends AppCompatActivity {
         startActivity(scoreIntent);
         finish();
         return;
+    }
+
+    private void saveUserLevel() {
+        myRef.child("Users").child(fuser.getUid()).child("ulevel").setValue(level);
+    }
+
+    private void saveTestResult() {
+        myRef.child("TestHistory").child(userModel.getUtesthistId()).child(""+userModel.getUtestcount()).setValue(testHistoryModelList);
+//        Increase the test count
+        int tcount = userModel.getUtestcount()+1;
+        myRef.child("Users").child(fuser.getUid()).child("utestcount").setValue(tcount);
     }
 
     // Getting Random number
