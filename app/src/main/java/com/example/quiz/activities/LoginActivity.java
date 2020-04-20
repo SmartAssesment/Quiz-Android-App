@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.quiz.DashboardActivity;
 import com.example.quiz.MainActivity;
 import com.example.quiz.R;
 import com.example.quiz.models.UserModel;
@@ -66,13 +67,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean userfound = false;
     final List<UserModel> list = new ArrayList<>();
-
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
-        updateUI(user);
-
+//        Log.d(TAG,user.getUid());
+        if(user!=null){
+            updateUI(user);
+        }
     }
 
     @Override
@@ -211,27 +213,29 @@ public class LoginActivity extends AppCompatActivity {
 
     private void checkExistingUser(final FirebaseUser user) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        final String username = user.getUid();
-        Log.d("UserName",username);
-        ref.child("users");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        final String userUid = user.getUid();
+        Log.d(TAG,"UserID-"+userUid);
+        ref.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild(username)) {
+                if (dataSnapshot.hasChild(userUid)) {
                     // use "username" already exists
 //                    User Data Already Exist So go to Dashboard
-                    Log.d("User Exist", user.getDisplayName());
-                    Intent mainIntent = new Intent(LoginActivity.this,MainActivity.class);
-                    mainIntent.putExtra("userid",username);
+                    Log.d(TAG, "Already Exist"+user.getDisplayName());
+                    Intent mainIntent = new Intent(LoginActivity.this, DashboardActivity.class);
+                    mainIntent.putExtra("userid",userUid);
+                    mainIntent.putExtra("useremail",user.getEmail());
+
                     startActivity(mainIntent);
                     finish();
                 } else {
                     // User does not exist. NOW call createUserWithEmailAndPassword
 //                    saveUserData(user);
-                    Log.d("User Don't Exist", user.getDisplayName());
+                    Log.d(TAG, "Dont Exist"+user.getDisplayName());
                     // Your previous code here.
                     Intent surveyIntent = new Intent(LoginActivity.this,SurveyActivity.class);
-                    surveyIntent.putExtra("userid",username);
+                    surveyIntent.putExtra("userid",userUid);
+                    surveyIntent.putExtra("useremail",user.getEmail());
                     startActivity(surveyIntent);
                     finish();
                 }

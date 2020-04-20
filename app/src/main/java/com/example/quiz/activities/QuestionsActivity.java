@@ -14,6 +14,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -25,7 +26,11 @@ import com.example.quiz.models.QuestionDetails;
 import com.example.quiz.models.QuestionModel;
 import com.example.quiz.models.StaticQueue;
 import com.example.quiz.R;
+import com.example.quiz.models.SurveyModel;
+import com.example.quiz.models.UserModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +55,7 @@ import static android.view.View.INVISIBLE;
 
 public class QuestionsActivity extends AppCompatActivity {
 
+    private static final String TAG = "QuestionActivity";
     private View decorView;
     public static final String FILE_NAME = "Quiz";
     public static final String KEY_NAME = "Questions";
@@ -72,7 +78,11 @@ public class QuestionsActivity extends AppCompatActivity {
     private List<QuestionModel> bookmarkslist;
     private boolean lastresponse = false;
     private StaticQueue sq = new StaticQueue(3);
-    private String level = "1";
+    private String level;
+//    Firebase Auth
+    private FirebaseAuth mAuth;
+//    Survey Response;
+    private List<String> surveyresponses;
 
     //    Tensorflow Interpreter
     private Interpreter tflite;
@@ -87,6 +97,8 @@ public class QuestionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
 
+//        Initialise Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
         // For Full Experince
         decorView = getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
@@ -155,8 +167,9 @@ public class QuestionsActivity extends AppCompatActivity {
         // Start Loading Dialog
         loadingdialog.show();
 
-//        Load the Question
-        loadQuestionsDetailList(level,loadingdialog);
+//        Load Survey Response
+        loadSurveyResponse();
+
 
 
         // Timer For Test
@@ -173,6 +186,39 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         }.start();
 
+    }
+
+    private void loadSurveyResponse() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+        myRef.child("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserModel user = dataSnapshot.getValue(UserModel.class);
+                String surveyId = user.getUsurveyId();
+                level = user.getUlevel();
+                myRef.child("SurveyHistory").child(surveyId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        SurveyModel surveyModel = dataSnapshot.getValue(SurveyModel.class);
+                        surveyresponses = surveyModel.getSurveyresponces();
+                        Log.d(TAG,"surveryResponses"+surveyresponses.get(0));
+                        //        Load the Question
+                        loadQuestionsDetailList(level,loadingdialog);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -293,7 +339,13 @@ public class QuestionsActivity extends AppCompatActivity {
         }
 //      Generating random level. After adding TensorFlow Lite it will decide next level
         float inputValues[] = getInputValues();
+        for(int i=0;i<inputValues.length;i++){
+            Log.d(TAG, "Input Values at "+i+"-"+String.valueOf(inputValues[i]));
+        }
+
         int result = doInference(inputValues);
+        Log.d(TAG, "Result "+String.valueOf(result));
+
         String templevel = level;
         level = String.valueOf(result);
 //        check if level changes
@@ -356,11 +408,15 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private float[] getInputValues() {
-        float[] input = new float[3];
-        input[0] = Float.parseFloat(level);
+        float[] input = new float[8];
+        for(int i=0;i<surveyresponses.size();i++){
+            input[i] = Float.parseFloat(surveyresponses.get(i));
+        }
+        input[5] = Float.parseFloat(level);
         int lres = lastresponse ? 1 : 0;
-        input[1] = lres;
-        input[2] = sq.getCount();
+        input[6] = lres;
+        input[7] = sq.getCount();
+
         return input;
     }
 
@@ -560,7 +616,7 @@ public class QuestionsActivity extends AppCompatActivity {
     //    Memory Map the file in the buffer
     private MappedByteBuffer loadModelFile() throws Exception {
 //        Open the file
-        AssetFileDescriptor fileDescriptor = this.getAssets().openFd("litemodel.tflite");
+        AssetFileDescriptor fileDescriptor = this.getAssets().openFd("quiz_classifier.tflite");
         FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
         FileChannel fileChannel = inputStream.getChannel();
         long startOffset = fileDescriptor.getStartOffset();

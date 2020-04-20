@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -140,7 +141,9 @@ public class SurveyActivity extends AppCompatActivity {
         surveyid = myRef.child("SurveyHistory").push().getKey();
         testhistoryid = myRef.child("TestHistory").push().getKey();
         String uid = getIntent().getStringExtra("userid");
-        UserModel userModel = new UserModel("0",uid,"1"," ",surveyid,testhistoryid);
+        String email = getIntent().getStringExtra("useremail").split("@")   [0];
+        Log.d("User Email",email);
+        UserModel userModel = new UserModel("0",uid,"1",email,surveyid,testhistoryid);
         myRef.child("Users").child(uid).setValue(userModel);
         SurveyModel surveyModel = new SurveyModel(uid,surveydetails);
         myRef.child("SurveyHistory").child(surveyid).setValue(surveyModel);
