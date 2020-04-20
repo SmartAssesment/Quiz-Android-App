@@ -40,33 +40,31 @@
     <string name="first_and_last_name">First And Last Name</string>
 <!--    <string name="default_web_client_id">415220481022-0o8rm99e5vuov09e0q2vmj8uj2j6vbpd.apps.googleusercontent.com</string>-->
 
-    <string-array name="experince_array">
-        <item>0 years</item>
-        <item>1-2 years</item>
-        <item>2-4 years</item>
-        <item>4-6 years</item>
+    <string-array name="question_array">
+        <item>How many year of Experience in Programming?</item>
+        <item>Why do you want to test your skill?</item>
+        <item>Your work style is extremely Organized and Methodical</item>
+        <item>You learn best by</item>
+        <item>What is your Current Designation</item>
     </string-array>
 
-    <string-array name="expectation_array">
-        <item>For the purpose of jobs</item>
-        <item>To enhance Skills in Programming or Coding</item>
-        <item>Begineers</item>
+    <string-array name="option1">
+        <item>0 to 1 Year</item>
+        <item>Placements</item>
+        <item>Agree</item>
+        <item>Researching and Analyzing</item>
+        <item>Student</item>
     </string-array>
 
-    <string-array name="type_of_person_array">
-        <item>Do You love Practical Knowledge</item>
-        <item>Do You like innovating new things</item>
-        <item>Do you like researching and analysis</item>
-        <item>Or just Head on</item>
+    <string-array name="option2">
+        <item>1 to 5 Year</item>3
+        <item>Upskill</item>
+        <item>Not Agree</item>
+        <item>Jumping into Project Head On</item>
+        <item>Working Professional</item>
     </string-array>
 
-    <string-array name="idea_array">
-        <item>Own Ideas</item>
-        <item>Others Ideas</item>
-    </string-array>
-
-    <string-array name="curiosity_array">
-        <item>Learning new Things</item>
-        <item>Exploring the existing things</item>
+    <string-array name="option3">
+        <item>More than 5 Year</item>
     </string-array>
 </resources>

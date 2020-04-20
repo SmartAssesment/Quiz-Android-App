@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCDqnXE_REJ_8-SUP63C5SgLoCq9RmARmY"
+          "current_key": "AIzaXXXXXXXXXXXXXXXXXARmY"
         }
       ],
       "services": {
@@ -67,35 +67,6 @@
             "certificate_hash": "80652c20147c334d84b46b1c645a44c0de803dac"
           }
         },
-        {
-          "client_id": "415220481022-vkkh4t74t3kdki3acap5fujjn9f54qel.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaXXXXXXXXXXXXXXXXXARmY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "415220481022-vkkh4t74t3kdki3acap5fujjn9f54qel.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:415220481022:android:5f689291ed7f7bf76cdeaf",
-        "android_client_info": {
-          "package_name": "com.example.quizadmin"
-        }
-      },
-      "oauth_client": [
         {
           "client_id": "415220481022-vkkh4t74t3kdki3acap5fujjn9f54qel.apps.googleusercontent.com",
           "client_type": 3
