@@ -1,68 +1,69 @@
 package com.example.quiz.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.animation.Animator;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.quiz.R;
-import com.example.quiz.models.SurveyModel;
-import com.example.quiz.models.UserModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.shuhart.stepview.StepView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SurveyActivity extends AppCompatActivity {
+public class SurveyDetailsActivity extends AppCompatActivity {
+    private static final String TAG = "SurveyDetails";
+    private StepView stepView;
 
     private List<String> surveydetails;
     private View decorView;
-    private TextView no_indicator,question;
+    private TextView question;
     private LinearLayout optionsContainer;
-    private Button previous,next;
+    private Button previous, next;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     private String surveyid = "";
     private String testhistoryid = "";
-    private int position = 0,count = 0;
-    private String[] question_array,option1,option2,option3;
+    private int position = 0, count = 0;
+    private String[] question_array, option1, option2, option3;
+    private Button selectedButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_survey);
+        setContentView(R.layout.activity_survey_details);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
-//        // For Full Experince
-//        decorView = getWindow().getDecorView();
-//        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-//            @Override
-//            public void onSystemUiVisibilityChange(int visibility) {
-//                if(visibility == 0){
-//                    decorView.setSystemUiVisibility(hideNavigationBar());
-//                }
-//            }
-//        });
-
-        // Linking layout component with variables
-        Toolbar toolbar = findViewById(R.id.surveyheader);
-        toolbar.setTitle("Extra Information");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setElevation(0);
 
-        no_indicator = findViewById(R.id.no_indicator);
+        stepView = (StepView) findViewById(R.id.step_view);
+        stepView.setStepsNumber(5);
+        stepView.setOnStepClickListener(new StepView.OnStepClickListener() {
+            @Override
+            public void onStepClick(int step) {
+                // 0 is the first step
+                stepView.go(step, true);
+            }
+        });
+
         question = findViewById(R.id.question);
-        optionsContainer = findViewById(R.id.options_container);
+        optionsContainer = findViewById(R.id.linearLayout2);
         previous = findViewById(R.id.previous);
         next = findViewById(R.id.next);
         surveydetails = new ArrayList<>();
@@ -72,15 +73,13 @@ public class SurveyActivity extends AppCompatActivity {
         option2 = getResources().getStringArray(R.array.option2);
         option3 = getResources().getStringArray(R.array.option3);
 
-
         //Display Question
         displayQuestion();
-
     }
 
     private void displayQuestion() {
         // Animating Question Loading
-        playAnime(question,0,question_array[position]);
+        playAnime(question, 0, question_array[position]);
         // Handle Listener For Next Button
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,53 +102,49 @@ public class SurveyActivity extends AppCompatActivity {
         enableoption(true);
         next.setEnabled(true);
         next.setAlpha(1);
+        discolorSelectedButton(selectedButton);
+        int currentStep = position;
+        if (currentStep > 0) {
+            currentStep--;
+        }
+        stepView.done(false);
+        stepView.go(currentStep, true);
+
         position--;
-        if(position == 0){
+        if (position == 0) {
             previous.setEnabled(false);
-        }else {
+        } else {
             previous.setEnabled(true);
         }
+
         count = 0;
-        playAnime(question,0,question_array[position]);
+        playAnime(question, 0, question_array[position]);
     }
 
     private void handleNextButtonClick() {
         next.setEnabled(false);
         next.setAlpha(0.7f);
         enableoption(true);
+        discolorSelectedButton(selectedButton);
         previous.setEnabled(true);
+
+        int currentStep = position;
+        if (currentStep < stepView.getStepCount() - 1) {
+            currentStep++;
+            stepView.go(currentStep, true);
+        } else {
+            stepView.done(true);
+        }
+
         position++;
-        if(position == 5){
-            storeInDatabase();
-            nextActivity();
-        }else{
-            count = 0;
+        if (position == 5) {
             playAnime(question,0,question_array[position]);
+//            storeInDatabase();
+//            nextActivity();
+        } else {
+            count = 0;
+            playAnime(question, 0, question_array[position]);
         }
-
-    }
-
-    private void storeInDatabase() {
-        surveyid = myRef.child("SurveyHistory").push().getKey();
-        testhistoryid = myRef.child("TestHistory").push().getKey();
-        String uid = getIntent().getStringExtra("userid");
-        String email = getIntent().getStringExtra("useremail").split("@")[0];
-        Log.d("User Email",email);
-        String level;
-        switch (surveydetails.get(0)){
-            case "0": level="1";
-            break;
-            case "1": level = "3";
-            break;
-            case "2": level = "5";
-            break;
-            default:level="1";
-        }
-        UserModel userModel = new UserModel("0",uid,level,email,surveyid,testhistoryid,0);
-        myRef.child("Users").child(uid).setValue(userModel);
-        SurveyModel surveyModel = new SurveyModel(uid,surveydetails);
-        myRef.child("SurveyHistory").child(surveyid).setValue(surveyModel);
-        Toast.makeText(SurveyActivity.this, "Response Recorded Successfully", Toast.LENGTH_SHORT).show();
     }
 
     private void setOptionsListener() {
@@ -165,6 +160,7 @@ public class SurveyActivity extends AppCompatActivity {
     }
 
     private void playAnime(final View view, final int value, final String data){
+
         view.animate().alpha(value).scaleX(value).scaleY(value).setDuration(500).setStartDelay(100)
                 .setInterpolator(new DecelerateInterpolator()).setListener(new Animator.AnimatorListener() {
             @Override
@@ -194,7 +190,6 @@ public class SurveyActivity extends AppCompatActivity {
                 if(value == 0){
                     try{
                         ((TextView) view).setText(data);
-                        no_indicator.setText("Question: "+(position+1)+"/5");
                     }catch (ClassCastException e){
                         ((Button) view).setText(data);
                     }
@@ -214,49 +209,34 @@ public class SurveyActivity extends AppCompatActivity {
             }
         });
     }
-    private void nextActivity() {
-        Intent dashboardIntent = new Intent(SurveyActivity.this, DashboardActivity.class);
-        startActivity(dashboardIntent);
-        finish();
-        return;
-    }
 
     private void storeanswer(Button selectedoption, int index) {
-        selectedoption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#3BB9FF")));
+//        selectedoption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#3BB9FF")));
+        selectedButton = selectedoption;
+        colorSelectedButton(selectedButton);
         enableoption(false);
         next.setEnabled(true);
         next.setAlpha(1);
-        surveydetails.set(position,String.valueOf(index));
+        //surveydetails.set(position,String.valueOf(index));
     }
+
+    private void colorSelectedButton(Button selectedoption) {
+        selectedoption.setBackground(getDrawable(R.drawable.rectangle_selected_border));
+        selectedoption.setTextColor(getResources().getColor(R.color.colorAccent));
+    }
+    private void discolorSelectedButton(Button selectedoption) {
+        selectedoption.setBackground(getDrawable(R.drawable.rectangle_border));
+        selectedoption.setTextColor(Color.parseColor("#999999"));
+    }
+
 
     private void enableoption(boolean enable) {
         for (int i = 0; i < 3; i++) {
             optionsContainer.getChildAt(i).setEnabled(enable);
-            if (enable) {
-                optionsContainer.getChildAt(i).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#989898")));
-            }
+//            if (enable) {
+//                optionsContainer.getChildAt(i).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#989898")));
+//            }
         }
     }
-
-
-
-
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
-//        if(hasFocus){
-//            decorView.setSystemUiVisibility(hideNavigationBar());
-//        }
-//    }
-//
-//    //For Hiding Navigation Bar and Status Bar
-//    private int hideNavigationBar(){
-//        return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-//    }
 
 }

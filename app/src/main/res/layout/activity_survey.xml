@@ -6,31 +6,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.SurveyActivity"
-        android:background="@drawable/unsplash">
-
-    <androidx.appcompat.widget.Toolbar
+        >
+    <android.support.v7.widget.Toolbar
         android:id="@+id/surveyheader"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:layout_marginTop="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@android:color/transparent">
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="38sp"
-            android:text="Survey"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="10dp" />
 
-    </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+
+
+
+        <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,31 +41,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Question: 1/5"
-            android:textColor="@android:color/holo_blue_bright"
-            android:textSize="25sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="18dp"
             android:gravity="center"
-            android:text="Questiondfdsfdsmfdsnfdsnfdsfndsjfds"
-            android:textColor="@android:color/holo_green_light"
+            android:text="This is a Sample Question Example"
+            android:textColor="@android:color/holo_blue_light"
             android:textStyle="bold"
-            android:textSize="45sp" />
+            android:fontFamily="sans-serif"
+            android:textSize="38sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/options_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="18dp"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="18dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,10 +79,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/rounded_borders"
-            android:backgroundTint="#989898"
+            android:backgroundTint="#03A9F4"
             android:text="@string/option_a"
-            android:textColor="@color/design_default_color_on_primary"
-            android:textSize="25sp" />
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/button6"
@@ -94,8 +92,8 @@
             android:background="@drawable/rounded_borders"
             android:backgroundTint="#989898"
             android:text="@string/option_b"
-            android:textColor="@color/design_default_color_on_primary"
-            android:textSize="25sp" />
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/button7"
@@ -105,8 +103,8 @@
             android:background="@drawable/rounded_borders"
             android:backgroundTint="#989898"
             android:text="@string/option_c"
-            android:textColor="@color/design_default_color_on_primary"
-            android:textSize="25sp" />
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -127,7 +125,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:enabled="false"
-            android:background="@drawable/bg_ui"
+            android:background="@android:color/holo_blue_dark"
+            android:textColor="@android:color/white"
             android:layout_margin="10dp"
             android:text="previous" />
 
@@ -137,7 +136,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:enabled="false"
-            android:background="@drawable/bg_ui"
+            android:background="@android:color/holo_blue_dark"
+            android:textColor="@android:color/white"
             android:layout_margin="10dp"
             android:text="next" />
     </LinearLayout>

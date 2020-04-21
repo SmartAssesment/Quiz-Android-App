@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.quiz">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activities.SurveyDetailsActivity"
+            android:label="@string/title_activity_survey_details"
+            ></activity>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.FullScreen">
@@ -25,8 +27,10 @@
             android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".activities.ForgotPasswordActivity"
-            android:theme="@style/AppTheme.FullScreen"/>
-        <activity android:name=".activities.SurveyActivity" />
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name=".activities.SurveyActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.BookmarkActivity" />
@@ -34,5 +38,7 @@
         <activity android:name=".activities.QuestionsActivity" />
         <activity android:name=".activities.CategoriesActivity" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
