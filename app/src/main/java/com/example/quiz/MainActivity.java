@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.quiz.activities.DashboardActivity;
 import com.example.quiz.activities.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void chooseIntent(FirebaseUser user) {
         if(user!=null){
-            startActivity(new Intent(MainActivity.this,DashboardActivity.class));
+            startActivity(new Intent(MainActivity.this, DashboardActivity.class));
             finish();
         }
         else{

@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.quiz.DashboardActivity;
-import com.example.quiz.MainActivity;
 import com.example.quiz.R;
 import com.example.quiz.models.UserModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
