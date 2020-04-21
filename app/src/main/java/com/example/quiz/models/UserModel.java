@@ -2,18 +2,28 @@ package com.example.quiz.models;
 
 public class UserModel {
     String uexppoint,uid,ulevel,uname,usurveyId,utesthistId;
+    int utestcount;
 
     public UserModel() {
         // For Firebase
     }
 
-    public UserModel(String uexppoint, String uid, String ulevel, String uname, String usurveyId, String utesthistId) {
+    public int getUtestcount() {
+        return utestcount;
+    }
+
+    public void setUtestcount(int utestcount) {
+        this.utestcount = utestcount;
+    }
+
+    public UserModel(String uexppoint, String uid, String ulevel, String uname, String usurveyId, String utesthistId, int utestcount) {
         this.uexppoint = uexppoint;
         this.uid = uid;
         this.ulevel = ulevel;
         this.uname = uname;
         this.usurveyId = usurveyId;
         this.utesthistId = utesthistId;
+        this.utestcount = utestcount;
     }
 
     public String getUexppoint() {

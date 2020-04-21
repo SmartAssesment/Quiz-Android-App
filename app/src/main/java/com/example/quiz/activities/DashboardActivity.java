@@ -1,17 +1,14 @@
-package com.example.quiz;
+package com.example.quiz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.quiz.activities.CategoriesActivity;
-import com.example.quiz.activities.LoginActivity;
+import com.example.quiz.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;

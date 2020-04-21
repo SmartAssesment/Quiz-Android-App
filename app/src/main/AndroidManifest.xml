@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,8 +27,8 @@
             android:name=".activities.ForgotPasswordActivity"
             android:theme="@style/AppTheme.FullScreen"/>
         <activity android:name=".activities.SurveyActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".DashboardActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.BookmarkActivity" />
         <activity android:name=".activities.ScoreActivity" />
         <activity android:name=".activities.QuestionsActivity" />
