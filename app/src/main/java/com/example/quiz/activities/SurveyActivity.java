@@ -143,7 +143,17 @@ public class SurveyActivity extends AppCompatActivity {
         String uid = getIntent().getStringExtra("userid");
         String email = getIntent().getStringExtra("useremail").split("@")[0];
         Log.d("User Email",email);
-        UserModel userModel = new UserModel("0",uid,"1",email,surveyid,testhistoryid,0);
+        String level;
+        switch (surveydetails.get(0)){
+            case "0": level="1";
+            break;
+            case "1": level = "3";
+            break;
+            case "2": level = "5";
+            break;
+            default:level="1";
+        }
+        UserModel userModel = new UserModel("0",uid,level,email,surveyid,testhistoryid,0);
         myRef.child("Users").child(uid).setValue(userModel);
         SurveyModel surveyModel = new SurveyModel(uid,surveydetails);
         myRef.child("SurveyHistory").child(surveyid).setValue(surveyModel);

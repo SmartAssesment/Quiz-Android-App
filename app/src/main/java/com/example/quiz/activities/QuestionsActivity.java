@@ -28,6 +28,7 @@ import com.example.quiz.models.StaticQueue;
 import com.example.quiz.R;
 import com.example.quiz.models.SurveyModel;
 import com.example.quiz.models.TestHistoryModel;
+import com.example.quiz.models.TestListModel;
 import com.example.quiz.models.UserModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +37,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -86,7 +88,7 @@ public class QuestionsActivity extends AppCompatActivity {
 //    Survey Response;
     private List<String> surveyresponses;
     private UserModel userModel;
-    private List<TestHistoryModel> testHistoryModelList = new ArrayList<>();
+    private List<TestListModel> testListModelList = new ArrayList<>();
 
     //    Tensorflow Interpreter
     private Interpreter tflite;
@@ -206,7 +208,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         SurveyModel surveyModel = dataSnapshot.getValue(SurveyModel.class);
                         surveyresponses = surveyModel.getSurveyresponces();
-                        Log.d(TAG,"surveryResponses"+surveyresponses.get(0));
+
                         //        Load the Question
                         loadQuestionsDetailList(level,loadingdialog);
                     }
@@ -343,12 +345,9 @@ public class QuestionsActivity extends AppCompatActivity {
         }
 //      Generating random level. After adding TensorFlow Lite it will decide next level
         float inputValues[] = getInputValues();
-        for(int i=0;i<inputValues.length;i++){
-            Log.d(TAG, "Input Values at "+i+"-"+String.valueOf(inputValues[i]));
-        }
+
 
         int result = doInference(inputValues);
-        Log.d(TAG, "Result "+String.valueOf(result));
 
         String templevel = level;
         level = String.valueOf(result);
@@ -558,8 +557,8 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void updateTestHistoryModelList(boolean lastresponse) {
-        TestHistoryModel testHistoryModel = new TestHistoryModel(qlist.get(position).getTypeId(),qlist.get(position).getqID(),lastresponse);
-        testHistoryModelList.add(testHistoryModel);
+        TestListModel testListModel = new TestListModel(qlist.get(position).getTypeId(),qlist.get(position).getqID(),lastresponse);
+        testListModelList.add(testListModel);
     }
 
     // Enabling option for next question
@@ -590,13 +589,18 @@ public class QuestionsActivity extends AppCompatActivity {
 
     private void saveUserLevel() {
         myRef.child("Users").child(fuser.getUid()).child("ulevel").setValue(level);
+
     }
 
     private void saveTestResult() {
-        myRef.child("TestHistory").child(userModel.getUtesthistId()).child(""+userModel.getUtestcount()).setValue(testHistoryModelList);
-//        Increase the test count
-        int tcount = userModel.getUtestcount()+1;
+        TestHistoryModel testHistoryModel = new TestHistoryModel(ServerValue.TIMESTAMP,score,correct_count,position,skip_count,testListModelList);
+        myRef.child("TestHistory").child(userModel.getUtesthistId()).child(""+userModel.getUtestcount()).setValue(testHistoryModel);
+//        myRef.child("TestHistory").child(userModel.getUtesthistId()).child(""+userModel.getUtestcount()).child("timestamp").updateChildren((Map<String, Object>) map.get("timestamp"));
+        int tcount = userModel.getUtestcount() + 1;
         myRef.child("Users").child(fuser.getUid()).child("utestcount").setValue(tcount);
+        int uscore = Integer.parseInt(userModel.getUexppoint()) + score;
+        myRef.child("Users").child(fuser.getUid()).child("uexppoint").setValue(uscore);
+
     }
 
     // Getting Random number
