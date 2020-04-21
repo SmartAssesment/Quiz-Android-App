@@ -223,9 +223,6 @@ public class LoginActivity extends AppCompatActivity {
 //                    User Data Already Exist So go to Dashboard
                     Log.d(TAG, "Already Exist"+user.getDisplayName());
                     Intent mainIntent = new Intent(LoginActivity.this, DashboardActivity.class);
-                    mainIntent.putExtra("userid",userUid);
-                    mainIntent.putExtra("useremail",user.getEmail());
-
                     startActivity(mainIntent);
                     finish();
                 } else {
