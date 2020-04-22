@@ -228,7 +228,7 @@ public class LoginActivity extends AppCompatActivity {
 //                    saveUserData(user);
                     Log.d(TAG, "Dont Exist"+user.getDisplayName());
                     // Your previous code here.
-                    Intent surveyIntent = new Intent(LoginActivity.this,SurveyActivity.class);
+                    Intent surveyIntent = new Intent(LoginActivity.this, SurveyActivity.class);
                     surveyIntent.putExtra("userid",userUid);
                     surveyIntent.putExtra("useremail",user.getEmail());
                     startActivity(surveyIntent);

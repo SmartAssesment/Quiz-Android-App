@@ -9,10 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".activities.SurveyDetailsActivity"
-            android:label="@string/title_activity_survey_details"
-            ></activity>
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.FullScreen">
@@ -23,13 +20,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.SurveyActivity"
+            android:label="@string/title_activity_survey_details" />
+        <activity
             android:name=".activities.RegisterActivity"
             android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".activities.ForgotPasswordActivity"
             android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".activities.SurveyActivity"
+            android:name=".activities.SurveyWelcomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.DashboardActivity" />
