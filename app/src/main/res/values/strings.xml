@@ -38,8 +38,18 @@
     <string name="survey">Survey</string>
     <string name="logout">Logout</string>
     <string name="first_and_last_name">First And Last Name</string>
-<!--    <string name="default_web_client_id">415220481022-0o8rm99e5vuov09e0q2vmj8uj2j6vbpd.apps.googleusercontent.com</string>-->
+    <!--    <string name="default_web_client_id">415220481022-0o8rm99e5vuov09e0q2vmj8uj2j6vbpd.apps.googleusercontent.com</string>-->
 
+    <string name="title_activity_survey_details">SurveyDetailsActivity</string>
+
+    <string name="first_fragment_label">First Fragment</string>
+
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="previous">Previous</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string-array name="question_array">
         <item>How many year of Experience in Programming?</item>
         <item>Why do you want to test your skill?</item>
@@ -47,7 +57,6 @@
         <item>You learn best by</item>
         <item>What is your Current Designation</item>
     </string-array>
-
     <string-array name="option1">
         <item>0 to 1 Year</item>
         <item>Placements</item>
@@ -63,7 +72,6 @@
         <item>Jumping into Project Head On</item>
         <item>Working Professional</item>
     </string-array>
-
     <string-array name="option3">
         <item>More than 5 Year</item>
     </string-array>
