@@ -41,7 +41,7 @@
         app:sv_doneStepMarkColor="@color/colorPurple"
         app:sv_nextStepLineColor="@color/colorAccent"
         app:sv_nextTextColor="@color/colorAccent"
-        app:sv_nextStepCircleColor="#A454FD"
+        app:sv_nextStepCircleColor="#8675F6"
         app:sv_nextStepCircleEnabled="true"
         app:sv_selectedCircleColor="@color/colorAccent"
         app:sv_selectedCircleRadius="18dp"
