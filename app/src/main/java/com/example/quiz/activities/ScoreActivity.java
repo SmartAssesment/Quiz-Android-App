@@ -1,14 +1,19 @@
 package com.example.quiz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.quiz.R;
+import com.example.quiz.utils.Utils;
 
 public class ScoreActivity extends AppCompatActivity {
 
@@ -19,50 +24,46 @@ public class ScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
 
-        // For Full Experince
-        decorView = getWindow().getDecorView();
-        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                if(visibility == 0){
-                    decorView.setSystemUiVisibility(hideNavigationBar());
-                }
-            }
-        });
-
-        TextView correctCount = findViewById(R.id.correct_count);
-        TextView skipCount = findViewById(R.id.skip_count);
-        Button doneBtn = findViewById(R.id.done_btn);
-        TextView totalscore = findViewById(R.id.totalscore);
-
-        totalscore.setText("Total Score:- " + String.valueOf(getIntent().getIntExtra("score",0)));
-        correctCount.setText("Correct Answers:- " + String.valueOf(getIntent().getIntExtra("correct_count",0)));
-        skipCount.setText("Skipped Questions:- " + String.valueOf(getIntent().getIntExtra("skip_count",0)));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//  set status text dark
+        getWindow().setStatusBarColor(ContextCompat.getColor(ScoreActivity.this,R.color.white));// set status background white
 
 
-        doneBtn.setOnClickListener(new View.OnClickListener() {
+        TextView scoretext =(TextView) findViewById(R.id.scoretextbox);
+        TextView resulttext =(TextView) findViewById(R.id.resulttext);
+        Button homebtn  = (Button) findViewById(R.id.homebtn);
+        Button reviewbtn  = (Button) findViewById(R.id.reviewbtn);
+
+        int score = getIntent().getIntExtra("score",0);
+        int correctCount = getIntent().getIntExtra("correct_count",0);
+        int skipCount = getIntent().getIntExtra("skip_count",0);
+        int total = getIntent().getIntExtra("total",0);
+
+        float percentage = (correctCount/total)*100;
+        Log.d("Correct:", String.valueOf(correctCount));
+        Log.d("Total:", String.valueOf(total));
+        Log.d("Percentage:", String.valueOf(percentage));
+
+        scoretext.setText(percentage+"% Score");
+        String attempted = getColoredSpanned(total+" questions","#715CFF");
+        String corrected = getColoredSpanned(correctCount + " answers","#0F80F6");
+        String skipped = getColoredSpanned(skipCount+" question(s)","#D2303E");
+
+        Spanned resultstring = Html.fromHtml("You attempted "+ attempted +"\n" +
+                "and from that "+ corrected+" is correct,\n" +
+                "and you skipped "+ skipped+".");
+        resulttext.setText(resultstring);
+
+        homebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ScoreActivity.this,DashboardActivity.class));
+                finish();
             }
         });
     }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if(hasFocus){
-            decorView.setSystemUiVisibility(hideNavigationBar());
-        }
+    private String getColoredSpanned(String text, String color) {
+        String input = "<font color=" + color + ">" + text + "</font>";
+        return input;
     }
 
-    //For Hiding Navigation Bar and Status Bar
-    private int hideNavigationBar(){
-        return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-    }
 }

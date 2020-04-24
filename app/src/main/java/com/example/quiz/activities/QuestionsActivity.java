@@ -335,7 +335,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
     private void handleNextButtonClick(Dialog loadingdialog) {
         if(selectedbutton != correctbutton){
-            discolorSelectedButton(correctbutton);
+            discolorSelectedButton(selectedbutton);
         }
         discolorSelectedButton(selectedbutton);
 
@@ -608,6 +608,7 @@ public class QuestionsActivity extends AppCompatActivity {
         //scoreIntent.putExtra("total", list.size());
         scoreIntent.putExtra("correct_count", correct_count);
         scoreIntent.putExtra("skip_count", skip_count);
+        scoreIntent.putExtra("total",position+1 );
         startActivity(scoreIntent);
         finish();
         return;
