@@ -14,28 +14,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-    <TextView
-        android:id="@+id/username"
+    <LinearLayout
+        android:id="@+id/heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingBottom="16dp"
-        android:paddingLeft="28dp"
-        android:text="John Doe"
-        android:textColor="@color/headingcolor"
-        android:textSize="42sp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_bold"
+            android:paddingBottom="16dp"
+            android:paddingLeft="24dp"
+            android:text="John Doe"
+            android:textColor="@color/headingcolor"
+            android:textSize="42sp"
+            />
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/userimg"
+            android:layout_width="0dp"
+            android:layout_height="82dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="8dp"
+            android:paddingRight="16dp"
+            app:civ_border_color="@color/headingcolor"
+            android:layout_weight="1"
+            android:src="@drawable/quiz"
+            />
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/heading"
         tools:layout_editor_absoluteX="-16dp">
 
         <TextView
