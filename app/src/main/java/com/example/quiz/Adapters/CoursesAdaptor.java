@@ -1,6 +1,7 @@
 package com.example.quiz.adapters;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.quiz.models.CategoryModel;
-import com.example.quiz.activities.QuestionsActivity;
 import com.example.quiz.R;
-import com.mikhaellopez.circularimageview.CircularImageView;
+import com.example.quiz.activities.QuestionsActivity;
+import com.example.quiz.models.CategoryModel;
+import com.example.quiz.models.CourseModel;
 
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Viewholder> {
+public class CoursesAdaptor extends RecyclerView.Adapter<CoursesAdaptor.Viewholder> {
 
-    private List<CategoryModel> categoryModelsList;
+    private List<CourseModel> courseModelsList;
 
-    public CategoryAdapter(List<CategoryModel> categoryModelsList) {
-        this.categoryModelsList = categoryModelsList;
+    public CoursesAdaptor(List<CourseModel> courseModelsList) {
+        this.courseModelsList = courseModelsList;
     }
 
     @NonNull
@@ -36,12 +37,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Viewho
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
         // Adding Content in view
-        holder.setData(categoryModelsList.get(position).getUrl(),categoryModelsList.get(position).getName(),categoryModelsList.get(position).getCourseID());
+        holder.setData(courseModelsList.get(position).getId(),courseModelsList.get(position).getIcon(),courseModelsList.get(position).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return categoryModelsList.size();
+        return courseModelsList.size();
     }
 
     class Viewholder extends RecyclerView.ViewHolder{
@@ -53,9 +54,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Viewho
             title = itemView.findViewById(R.id.title);
         }
 
-        private void setData(String url, final String title, final String courseID){
+        private void setData(final String courseID, final Drawable icon, final String title){
             // Load Image in imageview using glide library
-            Glide.with(itemView.getContext()).load(url).into(imageView);
+            this.imageView.setImageDrawable(icon);
             this.title.setText(title);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

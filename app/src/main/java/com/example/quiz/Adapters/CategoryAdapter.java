@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.quiz.models.CategoryModel;
 import com.example.quiz.activities.QuestionsActivity;
 import com.example.quiz.R;
+import com.example.quiz.models.CourseModel;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;

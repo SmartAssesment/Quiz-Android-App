@@ -1,21 +1,29 @@
 package com.example.quiz.models;
 
-import java.util.List;
-
 public class TestListModel {
     private int qtypeid;
     private String qId;
-    private boolean response;
+    private int responseindex;
+    private String qlevel;
 
-    public TestListModel() {
+    public TestListModel(int responseindex) {
+        this.responseindex = responseindex;
     }
 
-    public TestListModel(int qtypeid, String qId, boolean response) {
+    public TestListModel(int qtypeid, String qId, int responseindex,String qlevel) {
         this.qtypeid = qtypeid;
         this.qId = qId;
-        this.response = response;
+        this.responseindex = responseindex;
+        this.qlevel = qlevel;
     }
 
+    public String getQlevel() {
+        return qlevel;
+    }
+
+    public void setQlevel(String qlevel) {
+        this.qlevel = qlevel;
+    }
 
     public int getQtypeid() {
         return qtypeid;
@@ -33,11 +41,12 @@ public class TestListModel {
         this.qId = qId;
     }
 
-    public boolean isResponse() {
-        return response;
+
+    public int getResponseindex() {
+        return responseindex;
     }
 
-    public void setResponse(boolean response) {
-        this.response = response;
+    public void setResponseindex(int responseindex) {
+        this.responseindex = responseindex;
     }
 }

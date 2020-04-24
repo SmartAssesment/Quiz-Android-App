@@ -14,7 +14,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -68,6 +67,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private FloatingActionButton bookmarkBtn;
     private LinearLayout optionsContainer;
     private Button nextBtn, skipBtn, endBtn;
+    private Button selectedbutton,correctbutton;
     private int count = 0, position = 0, skip_count = 0,
             answered = 0, score = 0, correct_count = 0,
             matchedQuestionPosition, randomQuestion,
@@ -81,7 +81,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private List<QuestionModel> bookmarkslist;
     private boolean lastresponse = false;
     private StaticQueue sq = new StaticQueue(3);
-    private String level;
+    private int level;
 //    Firebase Auth
     private FirebaseAuth mAuth;
     private FirebaseUser fuser;
@@ -93,9 +93,9 @@ public class QuestionsActivity extends AppCompatActivity {
     //    Tensorflow Interpreter
     private Interpreter tflite;
     //    Already Downloaded QuestionDetails
-    Map<String, List<QuestionDetails>> downQuestionDetails = new HashMap<>();
+    Map<Integer, List<QuestionDetails>> downQuestionDetails = new HashMap<>();
     //    Already Used Random Question
-    Map<String, List<Integer>> usedRandomList = new HashMap<>();
+    Map<Integer, List<Integer>> usedRandomList = new HashMap<Integer, List<Integer>>();
 
 
     @Override
@@ -237,18 +237,18 @@ public class QuestionsActivity extends AppCompatActivity {
 
     //For Hiding Navigation Bar and Status Bar
     private int hideNavigationBar(){
-        return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        return View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+//                |
+//                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                | View.SYSTEM_UI_FLAG_FULLSCREEN
+//                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
     }
 
     //    Return the List of QuestionDetails from Firebase
-    private void loadQuestionsDetailList(final String level, final Dialog loadingdialog) {
+    private void loadQuestionsDetailList(final int level, final Dialog loadingdialog) {
         final List<QuestionDetails> questionDetailsList = new ArrayList<>();
-        myRef.child("Test").child(courseID).child("Levels").child(level).child("ques").addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("Test").child(courseID).child("Levels").child(String.valueOf(level)).child("ques").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -334,6 +334,11 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void handleNextButtonClick(Dialog loadingdialog) {
+        if(selectedbutton != correctbutton){
+            discolorSelectedButton(correctbutton);
+        }
+        discolorSelectedButton(selectedbutton);
+
         nextBtn.setEnabled(false);
         nextBtn.setAlpha(0.7f);
         enableoption(true);
@@ -346,11 +351,9 @@ public class QuestionsActivity extends AppCompatActivity {
 //      Generating random level. After adding TensorFlow Lite it will decide next level
         float inputValues[] = getInputValues();
 
+        int templevel = level;
+        level = doInference(inputValues);
 
-        int result = doInference(inputValues);
-
-        String templevel = level;
-        level = String.valueOf(result);
 //        check if level changes
         if(level !=templevel){
 //            We need to flush the queue;
@@ -373,16 +376,17 @@ public class QuestionsActivity extends AppCompatActivity {
 
     private void setOptionsListener() {
         for (int i = 0; i < 4; i++) {
+            final int finalI = i;
             optionsContainer.getChildAt(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    checkAnswer((Button) v);
+                    checkAnswer((Button) v, finalI);
                 }
             });
         }
     }
 
-    private int getRandomIndex(String level, List<QuestionDetails> questionDetailsList) {
+    private int getRandomIndex(int level, List<QuestionDetails> questionDetailsList) {
         int randomIndex = (int) (Math.random() * questionDetailsList.size());
         List<Integer> randomIndexList = usedRandomList.get(level);
 
@@ -415,7 +419,7 @@ public class QuestionsActivity extends AppCompatActivity {
         for(int i=0;i<surveyresponses.size();i++){
             input[i] = Float.parseFloat(surveyresponses.get(i));
         }
-        input[5] = Float.parseFloat(level);
+        input[5] = level;
         int lres = lastresponse ? 1 : 0;
         input[6] = lres;
         input[7] = sq.getCount();
@@ -498,11 +502,14 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     // For checking answer and adding Score
-    private void checkAnswer(Button selectedoption) {
+    private void checkAnswer(Button selectedoption,int index) {
         answered++;
-        enableoption(false);
+//        enableoption(false);
         nextBtn.setEnabled(true);
         nextBtn.setAlpha(1);
+        selectedbutton = selectedoption;
+
+
         int pos = Integer.parseInt(qlist.get(position).getCorrect()) - 1;
         int lvl = Integer.parseInt(qlist.get(position).getLevel());
         if (selectedoption.getText().toString().equals(qlist.get(position).getOptions().get(pos))) {
@@ -541,23 +548,41 @@ public class QuestionsActivity extends AppCompatActivity {
                     break;
             }
             correct_count++;
-            selectedoption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00FF00")));
+            colorSelectedButton(selectedbutton,true);
         } else {
             lastresponse = false;
             //incorrect answer
-            selectedoption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
-            Button correctoption = (Button) optionsContainer.findViewWithTag(qlist.get(position).getOptions().get(pos));
-            correctoption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00FF00")));
+
+            correctbutton = (Button) optionsContainer.findViewWithTag(qlist.get(position).getOptions().get(pos));
+            colorSelectedButton(selectedbutton,false);
+            colorSelectedButton(correctbutton,true);
+
         }
 //        Last Response will be pushed into the queue;
         sq.queueEnqueue(lastresponse);
 
 //        Update TestHistoryModelList
-        updateTestHistoryModelList(lastresponse);
+        updateTestHistoryModelList(index);
     }
 
-    private void updateTestHistoryModelList(boolean lastresponse) {
-        TestListModel testListModel = new TestListModel(qlist.get(position).getTypeId(),qlist.get(position).getqID(),lastresponse);
+    private void colorSelectedButton(Button selectedoption,boolean lastresponse) {
+        if(lastresponse){
+            selectedoption.setBackground(getDrawable(R.drawable.rectangle_correct_bg));
+            selectedoption.setTextColor(getResources().getColor(R.color.colorAccent));
+        }
+        else{
+            selectedoption.setBackground(getDrawable(R.drawable.rectangle_wrong_bg));
+            selectedoption.setTextColor(getResources().getColor(R.color.colorAccent));
+        }
+
+    }
+    private void discolorSelectedButton(Button selectedoption) {
+        selectedoption.setBackground(getDrawable(R.drawable.rectangle_border));
+        selectedoption.setTextColor(Color.parseColor("#222222"));
+    }
+
+    private void updateTestHistoryModelList(int responseindex) {
+        TestListModel testListModel = new TestListModel(qlist.get(position).getTypeId(),qlist.get(position).getqID(),responseindex,qlist.get(position).getLevel());
         testListModelList.add(testListModel);
     }
 
@@ -566,7 +591,8 @@ public class QuestionsActivity extends AppCompatActivity {
         for (int i = 0; i < 4; i++) {
             optionsContainer.getChildAt(i).setEnabled(enable);
             if (enable) {
-                optionsContainer.getChildAt(i).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#989898")));
+                Button b = (Button) optionsContainer.getChildAt(i);
+                discolorSelectedButton(b);
             }
         }
     }
@@ -598,7 +624,7 @@ public class QuestionsActivity extends AppCompatActivity {
 //        myRef.child("TestHistory").child(userModel.getUtesthistId()).child(""+userModel.getUtestcount()).child("timestamp").updateChildren((Map<String, Object>) map.get("timestamp"));
         int tcount = userModel.getUtestcount() + 1;
         myRef.child("Users").child(fuser.getUid()).child("utestcount").setValue(tcount);
-        int uscore = Integer.parseInt(userModel.getUexppoint()) + score;
+        int uscore = userModel.getUexppoint() + score;
         myRef.child("Users").child(fuser.getUid()).child("uexppoint").setValue(uscore);
 
     }
