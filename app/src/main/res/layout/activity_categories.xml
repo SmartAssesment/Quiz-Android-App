@@ -9,8 +9,9 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
+        app:titleTextColor="@color/white"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/gradient"/>
+        android:background="@color/colorPurple"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"

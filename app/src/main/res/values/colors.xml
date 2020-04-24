@@ -5,11 +5,24 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="colorBlue">#2FB4FF</color>
     <color name="colorBlueT">#642FB4FF</color>
-    <color name="colorPurple">#983CFF</color>
+    <color name="colorPurple">#715CFF</color>
     <color name="colorPurpleT">#64983CFF</color>
     <color name="stepview_line_next">#FF5722</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="splashscreen">#200F48</color>
+    <color name="headingcolor">#304151</color>
+    <color name="textsecondary">#A4ABB4</color>
+
+    <color name="learningpathbg">#20ABF3</color>
+    <color name="testhistory">#FA5E6C</color>
+    <color name="leaderboard">#E12535</color>
+    <color name="userprofile">#22CE72</color>
+    <color name="settings">#7A7F87</color>
+    <color name="logout">#232F3A</color>
+    <color name="correct_answer">#22CE72</color>
+    <color name="wrong_answer">#E12535</color>
+
 
 
 </resources>

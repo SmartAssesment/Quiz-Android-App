@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.quiz.R;
 import com.example.quiz.models.SurveyModel;
 import com.example.quiz.models.UserModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -134,22 +135,23 @@ public class SurveyWelcomeActivity extends AppCompatActivity {
         testhistoryid = myRef.child("TestHistory").push().getKey();
         String uid = getIntent().getStringExtra("userid");
         String email = getIntent().getStringExtra("useremail").split("@")[0];
+        String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         Log.d("User Email",email);
-        String level;
+        int level;
         switch (surveydetails.get(0)){
-            case "0": level="1";
-            break;
-            case "1": level = "3";
-            break;
-            case "2": level = "5";
-            break;
-            default:level="1";
+            case "0": level=1;
+                break;
+            case "1": level = 3;
+                break;
+            case "2": level = 5;
+                break;
+            default:level=1;
         }
-        UserModel userModel = new UserModel("0",uid,level,email,surveyid,testhistoryid,0);
+        UserModel userModel = new UserModel(uid,username,surveyid,testhistoryid,0,0,level);
         myRef.child("Users").child(uid).setValue(userModel);
         SurveyModel surveyModel = new SurveyModel(uid,surveydetails);
         myRef.child("SurveyHistory").child(surveyid).setValue(surveyModel);
-        Toast.makeText(SurveyWelcomeActivity.this, "Response Recorded Successfully", Toast.LENGTH_SHORT).show();
+
     }
 
     private void setOptionsListener() {

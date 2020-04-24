@@ -1,37 +1,21 @@
 package com.example.quiz.models;
 
 public class UserModel {
-    String uexppoint,uid,ulevel,uname,usurveyId,utesthistId;
-    int utestcount;
+     String uid,uname,usurveyId,utesthistId;
+    int utestcount,uexppoint,ulevel;
 
     public UserModel() {
         // For Firebase
     }
 
-    public int getUtestcount() {
-        return utestcount;
-    }
-
-    public void setUtestcount(int utestcount) {
-        this.utestcount = utestcount;
-    }
-
-    public UserModel(String uexppoint, String uid, String ulevel, String uname, String usurveyId, String utesthistId, int utestcount) {
-        this.uexppoint = uexppoint;
+    public UserModel(String uid, String uname, String usurveyId, String utesthistId, int utestcount, int uexppoint, int ulevel) {
         this.uid = uid;
-        this.ulevel = ulevel;
         this.uname = uname;
         this.usurveyId = usurveyId;
         this.utesthistId = utesthistId;
         this.utestcount = utestcount;
-    }
-
-    public String getUexppoint() {
-        return uexppoint;
-    }
-
-    public void setUexppoint(String uexppoint) {
         this.uexppoint = uexppoint;
+        this.ulevel = ulevel;
     }
 
     public String getUid() {
@@ -40,14 +24,6 @@ public class UserModel {
 
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public String getUlevel() {
-        return ulevel;
-    }
-
-    public void setUlevel(String ulevel) {
-        this.ulevel = ulevel;
     }
 
     public String getUname() {
@@ -72,5 +48,29 @@ public class UserModel {
 
     public void setUtesthistId(String utesthistId) {
         this.utesthistId = utesthistId;
+    }
+
+    public int getUtestcount() {
+        return utestcount;
+    }
+
+    public void setUtestcount(int utestcount) {
+        this.utestcount = utestcount;
+    }
+
+    public int getUexppoint() {
+        return uexppoint;
+    }
+
+    public void setUexppoint(int uexppoint) {
+        this.uexppoint = uexppoint;
+    }
+
+    public int getUlevel() {
+        return ulevel;
+    }
+
+    public void setUlevel(int ulevel) {
+        this.ulevel = ulevel;
     }
 }
