@@ -156,8 +156,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:enabled="false"
-            android:background="@drawable/rectangle_selected_border"
-            android:textColor="@android:color/white"
+            android:background="@drawable/rectangle_unfill"
+            android:textColor="@color/colorPurple"
             android:layout_margin="10dp"
             android:fontFamily="@font/roboto_bold"
             android:text="previous" />

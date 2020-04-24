@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -162,10 +161,10 @@ public class QuestionsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (modelmatch()) {
                     bookmarkslist.remove(matchedQuestionPosition);
-                    bookmarkBtn.setImageDrawable(getDrawable(R.drawable.bookmark_border));
+                    bookmarkBtn.setImageDrawable(getDrawable(R.drawable.icon_feather_bookmark));
                 } else {
                     bookmarkslist.add(qlist.get(position));
-                    bookmarkBtn.setImageDrawable(getDrawable(R.drawable.bookmark));
+                    bookmarkBtn.setImageDrawable(getDrawable(R.drawable.icon_awesome_bookmark));
                 }
             }
         });
@@ -477,9 +476,9 @@ public class QuestionsActivity extends AppCompatActivity {
                         ((TextView) view).setText(data);
                         noIndicator.setText(position + 1 + "/" + qlist.size());
                         if (modelmatch()) {
-                            bookmarkBtn.setImageDrawable(getDrawable(R.drawable.bookmark));
+                            bookmarkBtn.setImageDrawable(getDrawable(R.drawable.icon_feather_bookmark));
                         } else {
-                            bookmarkBtn.setImageDrawable(getDrawable(R.drawable.bookmark_border));
+                            bookmarkBtn.setImageDrawable(getDrawable(R.drawable.icon_feather_bookmark));
                         }
                     } catch (ClassCastException e) {
                         ((Button) view).setText(data);
