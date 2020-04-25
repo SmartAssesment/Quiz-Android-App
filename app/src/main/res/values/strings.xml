@@ -51,6 +51,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="sment">SMENT</string>
+    <string name="title_activity_user_profile">UserProfileActivity</string>
     <string-array name="question_array">
         <item>How many year of Experience in Programming?</item>
         <item>Why do you want to test your skill?</item>
@@ -58,6 +59,7 @@
         <item>You learn best by</item>
         <item>What is your Current Designation</item>
     </string-array>
+
     <string-array name="option1">
         <item>0 to 1 Year</item>
         <item>Placements</item>
@@ -65,7 +67,6 @@
         <item>Researching and Analyzing</item>
         <item>Student</item>
     </string-array>
-
     <string-array name="option2">
         <item>1 to 5 Year</item>3
         <item>Upskill</item>

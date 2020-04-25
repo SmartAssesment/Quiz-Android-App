@@ -105,7 +105,15 @@ public class DashboardActivity extends AppCompatActivity{
             public void onClick(View view) {
                 Log.d(TAG,"Quiz Test Clicked");
                 startActivity(new Intent(DashboardActivity.this,CategoriesActivity.class));
-                finish();
+
+            }
+        });
+
+        userprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardActivity.this,UserProfileActivity.class));
+
             }
         });
 

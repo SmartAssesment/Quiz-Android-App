@@ -12,6 +12,7 @@
     <color name="black">#000000</color>
     <color name="splashscreen">#200F48</color>
     <color name="headingcolor">#304151</color>
+    <color name="subheading">#A4ABB4</color>
     <color name="textsecondary">#A4ABB4</color>
 
     <color name="learningpathbg">#20ABF3</color>
