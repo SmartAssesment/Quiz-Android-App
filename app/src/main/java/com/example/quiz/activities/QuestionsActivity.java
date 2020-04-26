@@ -565,7 +565,7 @@ public class QuestionsActivity extends AppCompatActivity {
         sq.queueEnqueue(lastresponse);
 
 //        Update TestHistoryModelList
-        updateTestHistoryModelList(index);
+        updateTestHistoryModelList(lastresponse,index);
     }
 
     private void colorSelectedButton(Button selectedoption,boolean lastresponse) {
@@ -584,8 +584,8 @@ public class QuestionsActivity extends AppCompatActivity {
         selectedoption.setTextColor(Color.parseColor("#222222"));
     }
 
-    private void updateTestHistoryModelList(int responseindex) {
-        TestListModel testListModel = new TestListModel(qlist.get(position).getTypeId(),qlist.get(position).getqID(),responseindex,qlist.get(position).getLevel());
+    private void updateTestHistoryModelList(boolean lastresponse, int responseindex) {
+        TestListModel testListModel = new TestListModel(qlist.get(position).getTypeId(),qlist.get(position).getqID(),responseindex,qlist.get(position).getLevel(),lastresponse);
         testListModelList.add(testListModel);
     }
 
@@ -611,7 +611,7 @@ public class QuestionsActivity extends AppCompatActivity {
         //scoreIntent.putExtra("total", list.size());
         scoreIntent.putExtra("correct_count", correct_count);
         scoreIntent.putExtra("skip_count", skip_count);
-        scoreIntent.putExtra("total",position+1 );
+        scoreIntent.putExtra("total",position);
         startActivity(scoreIntent);
         finish();
         return;

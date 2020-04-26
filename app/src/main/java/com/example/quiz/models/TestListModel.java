@@ -5,19 +5,25 @@ public class TestListModel {
     private String qId;
     private int responseindex;
     private String qlevel;
-
-    public TestListModel(int responseindex) {
-        this.responseindex = responseindex;
-    }
+    boolean lastresponse;
 
     public TestListModel() {
     }
 
-    public TestListModel(int qtypeid, String qId, int responseindex, String qlevel) {
+    public TestListModel(int qtypeid, String qId, int responseindex, String qlevel, boolean lastresponse) {
         this.qtypeid = qtypeid;
         this.qId = qId;
         this.responseindex = responseindex;
         this.qlevel = qlevel;
+        this.lastresponse = lastresponse;
+    }
+
+    public boolean isLastresponse() {
+        return lastresponse;
+    }
+
+    public void setLastresponse(boolean lastresponse) {
+        this.lastresponse = lastresponse;
     }
 
     public String getQlevel() {

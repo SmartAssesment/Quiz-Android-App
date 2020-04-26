@@ -68,20 +68,20 @@ public class TestReviewActivity extends AppCompatActivity {
 
         fetchUserData();
         loadingdialog.show();
-        mCountDownTimer = new CountDownTimer(3000, 1000)
-        {
-            public void onTick(long millisUntilFinished)
-            {
-
-            }
-
-            public void onFinish()
-            {
-                loadingdialog.dismiss();
-                //Your action like intents are placed here
-                updateAdapter();
-            }
-        }.start();
+//        mCountDownTimer = new CountDownTimer(3000, 1000)
+//        {
+//            public void onTick(long millisUntilFinished)
+//            {
+//
+//            }
+//
+//            public void onFinish()
+//            {
+//
+//                //Your action like intents are placed here
+////                updateAdapter();
+//            }
+//        }.start();
 
     }
 
@@ -101,6 +101,8 @@ public class TestReviewActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userModel = dataSnapshot.getValue(UserModel.class);
+                loadingdialog.dismiss();
+                updateAdapter();
             }
 
             @Override

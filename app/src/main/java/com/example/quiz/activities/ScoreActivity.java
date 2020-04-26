@@ -38,12 +38,12 @@ public class ScoreActivity extends AppCompatActivity {
         int skipCount = getIntent().getIntExtra("skip_count",0);
         int total = getIntent().getIntExtra("total",0);
 
-        float percentage = (correctCount/total)*100;
+        float percentage = (float) (correctCount / total)*100;
         Log.d("Correct:", String.valueOf(correctCount));
         Log.d("Total:", String.valueOf(total));
         Log.d("Percentage:", String.valueOf(percentage));
-
-        scoretext.setText(percentage+"% Score");
+        String scorepercentage = percentage+"% Score";
+        scoretext.setText(scorepercentage);
         String attempted = getColoredSpanned(total+" questions","#715CFF");
         String corrected = getColoredSpanned(correctCount + " answers","#0F80F6");
         String skipped = getColoredSpanned(skipCount+" question(s)","#D2303E");
