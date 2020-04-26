@@ -10,7 +10,10 @@ public class TestListModel {
         this.responseindex = responseindex;
     }
 
-    public TestListModel(int qtypeid, String qId, int responseindex,String qlevel) {
+    public TestListModel() {
+    }
+
+    public TestListModel(int qtypeid, String qId, int responseindex, String qlevel) {
         this.qtypeid = qtypeid;
         this.qId = qId;
         this.responseindex = responseindex;
