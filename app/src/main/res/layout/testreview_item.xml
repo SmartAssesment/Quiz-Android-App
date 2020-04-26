@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@color/colorPurple"
+        app:cardBackgroundColor="@color/testhistory"
         app:cardCornerRadius="10dp"
         app:cardElevation="12dp">
 
@@ -24,7 +24,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="22dp"
+                android:paddingTop="24dp"
+                android:paddingHorizontal="24dp"
                 android:orientation="horizontal"
                 android:layout_weight="1"
                 android:weightSum="2">
@@ -35,28 +36,27 @@
                     android:id="@+id/testno"
                     android:layout_weight="1"
                     android:text="Test Number: 2"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="10dp"
-                    android:gravity="center_vertical"
+                    android:paddingRight="8dp"
+                    android:gravity="start"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins_bold"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:layout_gravity="center"/>
 
                 <TextView
+                    android:id="@+id/scoretextbox"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/points"
+
                     android:layout_weight="1"
                     android:text="Test Score: 50"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="10dp"
-                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:gravity="end"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins_bold"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -66,14 +66,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/timestamp"
                 android:layout_weight="1"
+                android:paddingTop="12dp"
+                android:paddingBottom="18dp"
                 android:text="Test Given On 24 April 2020"
-                android:paddingStart="24dp"
-                android:paddingEnd="20dp"
-                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:gravity="end"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="20sp"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="14sp"
                 android:layout_gravity="center"/>
         </LinearLayout>
 

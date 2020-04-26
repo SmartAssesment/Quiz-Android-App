@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         app:titleTextColor="@color/white"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPurple"/>
+        android:background="@color/testhistory"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/testhistrv"

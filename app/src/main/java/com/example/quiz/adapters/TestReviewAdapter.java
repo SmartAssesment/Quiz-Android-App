@@ -50,15 +50,15 @@ public class TestReviewAdapter extends RecyclerView.Adapter<TestReviewAdapter.Vi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             testno = itemView.findViewById(R.id.testno);
-            points = itemView.findViewById(R.id.points);
+            points = itemView.findViewById(R.id.scoretextbox);
             timestamp = itemView.findViewById(R.id.timestamp);
         }
         private void setData(final int marksObtained, final long timeStamp, final int position){
-            this.testno.setText("Test Number: "+(position + 1));
-            //this.points.setText(marksObtained);
-            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            this.testno.setText("Test #"+(position + 1));
+            this.points.setText("Score: "+marksObtained);
+            DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM-yy");
             String time = dateFormat.format(timeStamp);
-            this.timestamp.setText("Test Given On "+time);
+            this.timestamp.setText("Given On: "+time);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
