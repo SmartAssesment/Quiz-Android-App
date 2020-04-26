@@ -1,18 +1,19 @@
 package com.example.quiz.models;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
 public class TestHistoryModel {
-    private Map timestamp;
+    private long timeStamp;
     private int score,correct_count,total_count,skip_count;
     private List<TestListModel> responses;
 
     public TestHistoryModel() {
     }
 
-    public TestHistoryModel(Map timestamp, int score, int correct_count, int total_count, int skip_count, List<TestListModel> responses) {
-        this.timestamp = timestamp;
+    public TestHistoryModel(long timeStamp, int score, int correct_count, int total_count, int skip_count, List<TestListModel> responses) {
+        this.timeStamp = timeStamp;
         this.score = score;
         this.correct_count = correct_count;
         this.total_count = total_count;
@@ -20,12 +21,12 @@ public class TestHistoryModel {
         this.responses = responses;
     }
 
-    public Map getTimestamp() {
-        return timestamp;
+    public long getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setTimestamp(Map timestamp) {
-        this.timestamp = timestamp;
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public int getScore() {

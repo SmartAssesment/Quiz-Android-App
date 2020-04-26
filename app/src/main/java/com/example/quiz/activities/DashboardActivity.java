@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -100,6 +101,7 @@ public class DashboardActivity extends AppCompatActivity{
 
 
 
+
         quiztest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +118,15 @@ public class DashboardActivity extends AppCompatActivity{
             }
         });
 
+        testhistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent testHistoryIntent = new Intent(DashboardActivity.this,TestReviewActivity.class);
+                testHistoryIntent.putExtra("testhistid",userModel.getUtesthistId());
+                startActivity(testHistoryIntent);
+                finish();
+            }
+        });
 
 
 //            username.setText(user.getDisplayName());
@@ -130,7 +141,6 @@ public class DashboardActivity extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userModel = dataSnapshot.getValue(UserModel.class);
                 displayUserInfo();
-
                 loadingdialog.dismiss();
             }
 

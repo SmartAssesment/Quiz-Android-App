@@ -74,7 +74,7 @@ public class CategoriesActivity extends AppCompatActivity {
 //        final List<CategoryModel> list = new ArrayList<>();
          final List<CourseModel> courseModelList = new ArrayList<>();
          courseModelList.add(new CourseModel("C1",this.getResources().getDrawable(R.drawable.icon_python),"Python"));
-        courseModelList.add(new CourseModel("C2",this.getResources().getDrawable(R.drawable.icon_java),"Java"));
+         courseModelList.add(new CourseModel("C2",this.getResources().getDrawable(R.drawable.icon_java),"Java"));
 //        list.add()
 //               Drawable s =  this.getResources().getDrawable(R.drawable.icon_python);
 

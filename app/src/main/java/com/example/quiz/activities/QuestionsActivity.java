@@ -47,7 +47,11 @@ import java.io.FileInputStream;
 import java.lang.reflect.Type;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -335,7 +339,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
     private void handleNextButtonClick(Dialog loadingdialog) {
         if(selectedbutton != correctbutton){
-            discolorSelectedButton(correctbutton);
+            discolorSelectedButton(selectedbutton);
         }
         discolorSelectedButton(selectedbutton);
 
@@ -619,7 +623,9 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void saveTestResult() {
-        TestHistoryModel testHistoryModel = new TestHistoryModel(ServerValue.TIMESTAMP,score,correct_count,position,skip_count,testListModelList);
+        Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
+        long time = timeStamp.getTime();
+        TestHistoryModel testHistoryModel = new TestHistoryModel(time,score,correct_count,position,skip_count,testListModelList);
         myRef.child("TestHistory").child(userModel.getUtesthistId()).child(""+userModel.getUtestcount()).setValue(testHistoryModel);
 //        myRef.child("TestHistory").child(userModel.getUtesthistId()).child(""+userModel.getUtestcount()).child("timestamp").updateChildren((Map<String, Object>) map.get("timestamp"));
         int tcount = userModel.getUtestcount() + 1;
