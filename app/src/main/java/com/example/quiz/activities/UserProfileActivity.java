@@ -144,5 +144,6 @@ public class UserProfileActivity extends AppCompatActivity {
         option3_text.setText(options3.get(Integer.parseInt(surveyresponses.get(2))));
         option4_text.setText(options4.get(Integer.parseInt(surveyresponses.get(3))));
         option5_text.setText(options5.get(Integer.parseInt(surveyresponses.get(4))));
+
     }
 }
