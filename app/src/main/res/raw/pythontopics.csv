@@ -1,0 +1,39 @@
+1,Keywords and Identifiers,1,https://beginnersbook.com/2019/03/python-keywords-and-identifiers/,https://youtu.be/jUKQi9ZSchM
+2,Statements and Comments,1,https://www.journaldev.com/14012/python-comment-python-statement,https://youtu.be/0NO3MJkxm2g
+3,Variable,1,https://www.learnpython.org/en/Variables_and_Types,https://youtu.be/vKqVnr0BEJQ
+4,Type Conversion,1,https://www.programiz.com/python-programming/type-conversion-and-casting,https://youtu.be/a5xyuIw96ww
+5,I/O and Import,2,https://www.journaldev.com/14056/python-input-output-python-import,https://youtu.be/3_aRpCOEp5Y
+6,Operators,2,https://www.learnpython.org/en/Basic_Operators,https://youtu.be/Pm9FOpOwhlA
+7,Namespace,2,https://www.journaldev.com/14463/python-namespace-variable-scope,https://youtu.be/60BhDMIm5vk
+8,If Else,3,https://beginnersbook.com/2018/01/python-if-elif-else/,https://youtu.be/nMEFZ6TvkDA
+9,For Loop,3,https://www.w3schools.com/python/python_for_loops.asp,https://youtu.be/OnDr4J2UXSA
+10,While Loop,3,https://www.w3schools.com/python/python_while_loops.asp,https://youtu.be/JKK13i_ApOw
+11,Break and Continue,3,https://beginnersbook.com/2018/01/python-break-statement/,https://youtu.be/yCZBnjF4_tU
+12,Numbers,3,https://www.programiz.com/python-programming/numbers,https://youtu.be/YJKEqaaSGDs
+13,List,3,https://beginnersbook.com/2018/02/python-list/,https://youtu.be/9rLdQP3g4fw
+14,Tuple,3,https://beginnersbook.com/2018/02/python-tuple/,https://youtu.be/bdS4dHIJGBc
+15,Set,3,https://beginnersbook.com/2019/03/python-sets/,https://youtu.be/r3R3h5ly_8g
+16,Dictionary,3,https://beginnersbook.com/2019/03/python-dictionary/,https://youtu.be/2IsF7DEtVjg
+17,String,3,https://www.tutorialspoint.com/python/python_strings.htm,https://youtu.be/k9TUPpGqYTo
+18,Functions,4,https://www.tutorialspoint.com/python/python_functions.htm,https://youtu.be/oSPMmeaiQ68
+19,Arguments,4,https://www.programiz.com/python-programming/function-argument,https://youtu.be/ijXMGpoMkhQ
+20,Recurssion,4,https://www.programiz.com/python-programming/recursion,https://youtu.be/XkL3SUioNvo
+21,Class,5,https://www.tutorialspoint.com/python/python_classes_objects.htm,https://youtu.be/98YeQpmQeH8
+22,Inhertence,5,https://www.journaldev.com/14633/python-inheritance-example,https://youtu.be/u9x475OGj_U
+23,Multiple Inhertence,5,https://www.journaldev.com/14623/python-multiple-inheritance,https://youtu.be/-f5yvt5XtEU
+24,Operator Overloading,5,https://www.journaldev.com/14637/python-operator-overloading,https://youtu.be/9wd50TKv_OQ
+25,Modules,6,https://www.programiz.com/python-programming/modules,https://youtu.be/7GXaobCrBb4
+26,Package,6,https://www.programiz.com/python-programming/package,https://youtu.be/fRlkTV3mYBY
+27,User Defined Exception,7,https://www.geeksforgeeks.org/user-defined-exceptions-python-examples/,https://youtu.be/alnua4JlqNk
+28,System Defined Exception,7,https://www.programiz.com/python-programming/exceptions,https://youtu.be/zh8rB8O0V1w
+29,Exception Handling,7,https://www.google.com/amp/s/www.geeksforgeeks.org/python-set-5-exception-handling/amp/,https://youtu.be/NMTEjQ8-AJM
+30,File Operation,8,https://www.programiz.com/python-programming/file-operation,https://youtu.be/Uh2ebFW8OYM
+31,Directory,8,https://www.programiz.com/python-programming/directory,https://youtu.be/FLdyAIABfXs
+32,RegEx,9,https://www.programiz.com/python-programming/regex,https://youtu.be/zN8rwVXwRUE
+33,Iterator,9,https://www.journaldev.com/14620/python-iterator,https://youtu.be/Dyu08G2l71c
+34,Generator,9,https://www.learnpython.org/en/Generators,https://youtu.be/LwPTfwlry1s
+35,Closure,10,https://www.learnpython.org/en/Closures,https://youtu.be/swU3c34d2NQ
+36,Decorators,10,https://www.programiz.com/python-programming/decorator,https://youtu.be/FsAPt_9Bf3U
+37,Property,10,https://www.programiz.com/python-programming/property,https://youtu.be/PF2vDvAL1CQ
+38,DateTime,10,https://www.tutorialspoint.com/python/python_date_time.htm,https://youtu.be/eirjjyP2qcQ
+39,Time,10,https://www.programiz.com/python-programming/time,https://youtu.be/mHezNgNBnuA
