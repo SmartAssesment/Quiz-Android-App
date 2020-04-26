@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".activities.TestAnswersheetActivity"></activity>
         <activity android:name=".activities.TestReviewActivity" />
         <activity
@@ -46,6 +47,18 @@
             android:name=".activities.CategoriesActivity"
             android:parentActivityName=".activities.DashboardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".activities.LearningPathActivity"
+            android:parentActivityName=".activities.DashboardActivity"/>
+        <activity
+            android:name=".activities.UserProfileActivity"
+            android:parentActivityName=".activities.DashboardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>
