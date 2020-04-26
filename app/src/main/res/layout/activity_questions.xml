@@ -37,7 +37,7 @@
             android:layout_marginBottom="16dp"
             android:alpha="1"
             android:background="@drawable/rectangle_selected_border"
-            android:backgroundTint="@color/userprofile"
+            android:backgroundTint="@color/colorPurple"
             android:enabled="false"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/next"
@@ -159,10 +159,10 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
-                    android:padding="16dp"
+                    android:paddingHorizontal="16dp"
                     android:text="@string/remaining_time_5_second"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -172,10 +172,10 @@
                     android:layout_weight="3"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="start"
-                    android:padding="16dp"
+                    android:paddingHorizontal="16dp"
                     android:text="@string/_5_10"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -188,7 +188,7 @@
                 android:background="@drawable/rectangle_border"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center_vertical"
-                android:minHeight="150dp"
+                android:minHeight="120dp"
                 android:padding="22dp"
                 android:text="@string/textview"
                 android:textColor="@color/headingcolor"
@@ -226,11 +226,11 @@
             android:layout_marginEnd="16dp"
             android:clickable="true"
             android:focusable="true"
-            android:backgroundTint="@color/learningpathbg"
+            android:backgroundTint="@color/testhistory"
             android:translationY="24dp"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/bookmark_border" />
+            app:srcCompat="@drawable/icon_feather_bookmark" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
