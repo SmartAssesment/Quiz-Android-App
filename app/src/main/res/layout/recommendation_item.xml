@@ -45,11 +45,13 @@
                     android:id="@+id/articlebtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@drawable/rectangle_border"
                     android:text="Read Article"
+                    android:fontFamily="@font/poppins_medium"
                     android:layout_marginRight="16dp"
                     android:layout_weight="1"
                     android:padding="14dp"
+
                     android:textColor="@color/headingcolor"
                     />
                 <Button
@@ -57,8 +59,9 @@
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginLeft="16dp"
+                    android:background="@drawable/rectangle_border"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:fontFamily="@font/poppins_medium"
                     android:text="Watch Video"
                     android:padding="14dp"
                     android:textColor="@color/headingcolor"
