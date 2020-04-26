@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -42,6 +43,8 @@
             android:name=".activities.CategoriesActivity"
             android:parentActivityName=".activities.DashboardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.LearningPathActivity"
+            android:parentActivityName=".activities.DashboardActivity"/>
         <activity
             android:name=".activities.UserProfileActivity"
             android:parentActivityName=".activities.DashboardActivity"

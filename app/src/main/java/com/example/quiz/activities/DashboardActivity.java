@@ -117,6 +117,13 @@ public class DashboardActivity extends AppCompatActivity{
             }
         });
 
+        learningpath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardActivity.this,LearningPathActivity.class));
+            }
+        });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
