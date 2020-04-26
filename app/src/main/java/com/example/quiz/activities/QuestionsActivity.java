@@ -612,6 +612,8 @@ public class QuestionsActivity extends AppCompatActivity {
         scoreIntent.putExtra("correct_count", correct_count);
         scoreIntent.putExtra("skip_count", skip_count);
         scoreIntent.putExtra("total",position);
+        scoreIntent.putExtra("testhistid",userModel.getUtesthistId());
+        scoreIntent.putExtra("testcount",userModel.getUtestcount());
         startActivity(scoreIntent);
         finish();
         return;

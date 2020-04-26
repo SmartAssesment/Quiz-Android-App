@@ -32,11 +32,14 @@ public class ScoreActivity extends AppCompatActivity {
         TextView resulttext =(TextView) findViewById(R.id.resulttext);
         Button homebtn  = (Button) findViewById(R.id.homebtn);
         Button reviewbtn  = (Button) findViewById(R.id.reviewbtn);
+        Button learningpath = (Button)findViewById(R.id.learningpathbtn);
 
         int score = getIntent().getIntExtra("score",0);
         int correctCount = getIntent().getIntExtra("correct_count",0);
         int skipCount = getIntent().getIntExtra("skip_count",0);
         int total = getIntent().getIntExtra("total",0);
+        String testhistId = getIntent().getStringExtra("testhistid");
+        int testcount = getIntent().getIntExtra("testcount",0);
 
         float percentage = (correctCount/(float)total)*100;
         String scorepercentage = percentage+"% Score";
@@ -44,6 +47,7 @@ public class ScoreActivity extends AppCompatActivity {
         String attempted = getColoredSpanned(total+" questions","#715CFF");
         String corrected = getColoredSpanned(correctCount + " answers","#0F80F6");
         String skipped = getColoredSpanned(skipCount+" question(s)","#D2303E");
+
 
         Spanned resultstring = Html.fromHtml("You attempted "+ attempted +"\n" +
                 "and from that "+ corrected+" is correct,\n" +
@@ -55,6 +59,13 @@ public class ScoreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(ScoreActivity.this,DashboardActivity.class));
                 finish();
+            }
+        });
+
+        learningpath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ScoreActivity.this,LearningPathActivity.class));
             }
         });
     }
