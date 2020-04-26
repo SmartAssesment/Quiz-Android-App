@@ -34,7 +34,7 @@
                 >
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
+                    android:layout_height="320dp"
                    android:src="@drawable/trophy"
                     android:padding="16dp"
                     android:layout_gravity="center"
@@ -76,7 +76,7 @@ from that 9 answer is correct!"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginVertical="16dp">
+                    android:layout_marginTop="16dp">
                     <Button
                         android:id="@+id/homebtn"
                         android:layout_width="wrap_content"
@@ -86,9 +86,10 @@ from that 9 answer is correct!"
                         android:layout_gravity="center"
                         android:paddingHorizontal="36dp"
                         android:paddingVertical="12dp"
-                        android:textColor="@color/colorPurple"
+                        android:textColor="@color/white"
                         android:fontFamily="@font/poppins_bold"
-                        android:background="@drawable/rectangle_unfill"
+                        android:background="@drawable/rectangle_border"
+                        android:backgroundTint="@color/colorPurple"
                         android:paddingLeft="24dp"
                         android:layout_marginVertical="24dp"
                         android:layout_marginLeft="24dp"
@@ -110,6 +111,27 @@ from that 9 answer is correct!"
                         android:layout_marginVertical="24dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="24dp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="0dp"
+                    android:paddingHorizontal="24dp">
+                    <Button
+                        android:id="@+id/learningpathbtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Learning Path"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:paddingHorizontal="36dp"
+                        android:paddingVertical="12dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:background="@drawable/rectangle_border"
+                        android:backgroundTint="@color/learningpathbg"
+
                         />
                 </LinearLayout>
 

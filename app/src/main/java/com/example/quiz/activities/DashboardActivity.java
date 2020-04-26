@@ -133,6 +133,7 @@ public class DashboardActivity extends AppCompatActivity{
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 firebaseAuth.signOut();
             }
         });
