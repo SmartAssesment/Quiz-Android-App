@@ -114,6 +114,7 @@ public class DashboardActivity extends AppCompatActivity{
         userprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 startActivity(new Intent(DashboardActivity.this,UserProfileActivity.class));
 
             }
@@ -122,7 +123,10 @@ public class DashboardActivity extends AppCompatActivity{
         learningpath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DashboardActivity.this,LearningPathActivity.class));
+                Intent learningpath = new Intent(DashboardActivity.this,LearningPathActivity.class);
+                learningpath.putExtra("testhistoryId",userModel.getUtesthistId());
+                learningpath.putExtra("testcount",userModel.getUtestcount());
+                startActivity(learningpath);
             }
         });
 
