@@ -10,7 +10,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.example.quiz.models.QuestionModel;
 import com.example.quiz.models.TestHistoryModel;
 import com.example.quiz.models.TestListModel;
 import com.example.quiz.models.UserModel;
+import com.example.quiz.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +36,7 @@ import java.util.List;
 
 public class TestAnswersheetActivity extends AppCompatActivity {
 
+    private static final String TAG = "TestAnswerSheet" ;
     private RecyclerView recyclerView;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -44,18 +48,21 @@ public class TestAnswersheetActivity extends AppCompatActivity {
     List<TestListModel> testListModels = new ArrayList<>();
     List<QuestionModel> questionModels = new ArrayList<>();
     List<TestHistoryModel> testHistoryModels = new ArrayList<>();
-    TestAnswersheetAdapter adapter = new TestAnswersheetAdapter(testListModels,questionModels);
-//    private long time = 0;
-//    private int testno = 0;
+    TestAnswersheetAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_answersheet);
 
+        Utils.darkenStatusBar(this, R.color.testhistory);
+        View decorView = getWindow().getDecorView(); //set status background black
+        decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); //set status text
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Answersheet");
+        getSupportActionBar().setTitle("Test Summary");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         loadingdialog = new Dialog(this);
@@ -64,12 +71,12 @@ public class TestAnswersheetActivity extends AppCompatActivity {
         loadingdialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         loadingdialog.setCancelable(false);
 
-        //firebaseAuth = FirebaseAuth.getInstance();
+//        firebaseAuth = FirebaseAuth.getInstance();
         recyclerView = findViewById(R.id.answerSheetrv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+
 
         //fetchUserData();
         //updateAdapter();
@@ -86,48 +93,6 @@ public class TestAnswersheetActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    private void fetchUserData() {
-//        fuser = firebaseAuth.getCurrentUser();
-//        String uid = fuser.getUid();
-//        myRef.child("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                userModel = dataSnapshot.getValue(UserModel.class);
-//                loadingdialog.dismiss();
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-
-//    private void updateAdapter() {
-//        time = getIntent().getLongExtra("timeStamp",0);
-//        myRef.child("TestHistory").child(userModel.getUtesthistId()).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    testHistoryModels.add(snapshot.getValue(TestHistoryModel.class));
-//                }
-//                for(int i = 0; i < testHistoryModels.size(); i++){
-//                    if(testHistoryModels.get(i).getTimeStamp() == time){
-//                        testno = i;
-//                        break;
-//                    }
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(TestAnswersheetActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-//                finish();
-//            }
-//        });
-//    }
 
     private void getResponceData() {
         myRef.child("TestHistory").child(getIntent().getStringExtra("testhistid")).child(String.valueOf(getIntent()
@@ -137,6 +102,7 @@ public class TestAnswersheetActivity extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     testListModels.add(snapshot.getValue(TestListModel.class));
                 }
+
                 Toast.makeText(TestAnswersheetActivity.this, "Responces fetched", Toast.LENGTH_SHORT).show();
                 getQuestionData();
             }
@@ -150,13 +116,25 @@ public class TestAnswersheetActivity extends AppCompatActivity {
     }
 
     private void getQuestionData() {
-        for(int i = 0; i < testHistoryModels.size(); i++){
-            myRef.child("Types").child(String.valueOf(testListModels.get(i).getQtypeid())).child(testListModels.get(i).getqId())
+//        Log.d(TAG,"Inside Question Fetch");
+        for(TestListModel testListModel:testListModels){
+
+            myRef.child("Types").child(String.valueOf(testListModel.getQtypeid())).child(testListModel.getqId())
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    questionModels.add(dataSnapshot.getValue(QuestionModel.class));
+                    QuestionModel question = dataSnapshot.getValue(QuestionModel.class);
+                    questionModels.add(question);
+                    Log.d(TAG,"Question ID:"+question.getqID());
+//                    Toast.makeText(TestAnswersheetActivity.this, "Question fetched", Toast.LENGTH_SHORT).show();
+                    if(questionModels.size() == testListModels.size()){
+                        loadingdialog.dismiss();
+
+                        adapter = new TestAnswersheetAdapter(testListModels,questionModels);
+                        recyclerView.setAdapter(adapter);
+                    }
                 }
+
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -164,8 +142,9 @@ public class TestAnswersheetActivity extends AppCompatActivity {
                     finish();
                 }
             });
+
         }
-        loadingdialog.dismiss();
-        adapter.notifyDataSetChanged();
+
+
     }
 }

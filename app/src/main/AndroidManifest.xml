@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.TestAnswersheetActivity"></activity>
+        <activity android:name=".activities.TestAnswersheetActivity"
+            android:parentActivityName=".activities.DashboardActivity"></activity>
         <activity android:name=".activities.TestReviewActivity" />
         <activity
             android:name=".MainActivity"

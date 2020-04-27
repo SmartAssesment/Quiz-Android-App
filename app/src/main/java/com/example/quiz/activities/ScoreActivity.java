@@ -38,11 +38,12 @@ public class ScoreActivity extends AppCompatActivity {
         int correctCount = getIntent().getIntExtra("correct_count",0);
         int skipCount = getIntent().getIntExtra("skip_count",0);
         int total = getIntent().getIntExtra("total",0);
-        String testhistId = getIntent().getStringExtra("testhistid");
-        int testcount = getIntent().getIntExtra("testcount",0);
+        final String testhistId = getIntent().getStringExtra("testhistid");
+        final int testcount = getIntent().getIntExtra("testcount",0);
 
         float percentage = (correctCount/(float)total)*100;
-        String scorepercentage = percentage+"% Score";
+        String perc = String.format("%.2f", percentage);
+        String scorepercentage = perc+"% Score";
         scoretext.setText(scorepercentage);
         String attempted = getColoredSpanned(total+" questions","#715CFF");
         String corrected = getColoredSpanned(correctCount + " answers","#0F80F6");
@@ -59,6 +60,16 @@ public class ScoreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(ScoreActivity.this,DashboardActivity.class));
                 finish();
+            }
+        });
+
+        reviewbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent answerSheetIntent = new Intent(ScoreActivity.this, TestAnswersheetActivity.class);
+                answerSheetIntent.putExtra("index",testcount);
+                answerSheetIntent.putExtra("testhistid",testhistId);
+                startActivity(answerSheetIntent);
             }
         });
 
