@@ -103,7 +103,6 @@
                 android:paddingHorizontal="8dp"
                 android:text="@string/option_b"
                 android:textColor="#222222"
-
                 android:textSize="14sp" />
 
             <Button
