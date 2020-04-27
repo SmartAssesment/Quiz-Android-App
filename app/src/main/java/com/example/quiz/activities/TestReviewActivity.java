@@ -41,7 +41,7 @@ public class TestReviewActivity extends AppCompatActivity {
     FirebaseUser fuser;
     private FirebaseAuth firebaseAuth;
     List<TestHistoryModel> list  = new ArrayList<>();
-    TestReviewAdapter adapter = new TestReviewAdapter(list);
+    TestReviewAdapter adapter;
     private Dialog loadingdialog;
     private CountDownTimer mCountDownTimer;
 
@@ -66,7 +66,7 @@ public class TestReviewActivity extends AppCompatActivity {
         loadingdialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         loadingdialog.setCancelable(false);
 
-
+        adapter = new TestReviewAdapter(list,getIntent().getStringExtra("testhistid"));
         firebaseAuth = FirebaseAuth.getInstance();
         recyclerView = findViewById(R.id.testhistrv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -74,22 +74,8 @@ public class TestReviewActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        fetchUserData();
         loadingdialog.show();
-//        mCountDownTimer = new CountDownTimer(3000, 1000)
-//        {
-//            public void onTick(long millisUntilFinished)
-//            {
-//
-//            }
-//
-//            public void onFinish()
-//            {
-//
-//                //Your action like intents are placed here
-////                updateAdapter();
-//            }
-//        }.start();
+        updateAdapter();
 
     }
 
@@ -102,32 +88,15 @@ public class TestReviewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void fetchUserData() {
-        fuser = firebaseAuth.getCurrentUser();
-        String uid = fuser.getUid();
-        myRef.child("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userModel = dataSnapshot.getValue(UserModel.class);
-                loadingdialog.dismiss();
-                updateAdapter();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
     private void updateAdapter() {
-        myRef.child("TestHistory").child(userModel.getUtesthistId()).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("TestHistory").child(getIntent().getStringExtra("testhistid")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     list.add(snapshot.getValue(TestHistoryModel.class));
                 }
                 adapter.notifyDataSetChanged();
+                loadingdialog.dismiss();
             }
 
             @Override

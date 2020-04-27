@@ -27,7 +27,7 @@ public class TestAnswersheetAdapter extends RecyclerView.Adapter<TestAnswersheet
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.testanswersheet_item,parent,false);
-        return null;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class TestAnswersheetAdapter extends RecyclerView.Adapter<TestAnswersheet
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView question,option1,option2,option3,option4;
+        private TextView question,option1,option2,option3,option4,correct,userresponce;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             question = itemView.findViewById(R.id.aquestion);
@@ -50,11 +50,30 @@ public class TestAnswersheetAdapter extends RecyclerView.Adapter<TestAnswersheet
             option2 = itemView.findViewById(R.id.aoption2);
             option3 = itemView.findViewById(R.id.aoption3);
             option4 = itemView.findViewById(R.id.aoption4);
+            userresponce = itemView.findViewById(R.id.userresponce);
+            correct = itemView.findViewById(R.id.correct);
         }
 
         public void setData(String ques, List<String> options, String correct, int responseindex) {
             this.question.setText(ques);
-//            if()
+            if(options.size() == 2){
+                option1.setText("A) "+options.get(0));
+                option2.setText("B) "+options.get(1));
+                option3.setVisibility(View.INVISIBLE);
+                option4.setVisibility(View.INVISIBLE);
+            }else if(options.size() == 3){
+                option1.setText("A) "+options.get(0));
+                option2.setText("B) "+options.get(1));
+                option3.setText("C) "+options.get(2));
+                option4.setVisibility(View.INVISIBLE);
+            }else {
+                option1.setText("A) "+options.get(0));
+                option2.setText("B) "+options.get(1));
+                option3.setText("C) "+options.get(2));
+                option4.setText("D) "+options.get(3));
+            }
+            this.correct.setText("Correct Answer: "+ options.get((Integer.parseInt(correct))- 1));
+            this.userresponce.setText("You Answered: "+options.get(responseindex));
         }
     }
 }

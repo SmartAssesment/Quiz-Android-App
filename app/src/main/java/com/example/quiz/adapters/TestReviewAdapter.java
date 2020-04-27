@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quiz.R;
+import com.example.quiz.activities.TestAnswersheetActivity;
 import com.example.quiz.models.TestHistoryModel;
 
 import java.sql.Timestamp;
@@ -23,9 +24,15 @@ import java.util.Map;
 public class TestReviewAdapter extends RecyclerView.Adapter<TestReviewAdapter.ViewHolder> {
 
     private List<TestHistoryModel> testHistoryModelList;
+    private String testhistid;
 
-    public TestReviewAdapter(List<TestHistoryModel> testHistoryModelList) {
+//    public TestReviewAdapter(List<TestHistoryModel> testHistoryModelList) {
+//        this.testHistoryModelList = testHistoryModelList;
+//    }
+
+    public TestReviewAdapter(List<TestHistoryModel> testHistoryModelList, String testhistid) {
         this.testHistoryModelList = testHistoryModelList;
+        this.testhistid = testhistid;
     }
 
     @NonNull
@@ -62,7 +69,10 @@ public class TestReviewAdapter extends RecyclerView.Adapter<TestReviewAdapter.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent answerSheetIntent = new Intent(itemView.getContext(), TestAnswersheetActivity.class);
+                    answerSheetIntent.putExtra("index",position);
+                    answerSheetIntent.putExtra("testhistid",testhistid);
+                    itemView.getContext().startActivity(answerSheetIntent);
                 }
             });
         }
