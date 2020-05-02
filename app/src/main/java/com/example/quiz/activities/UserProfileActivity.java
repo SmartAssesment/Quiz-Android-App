@@ -63,14 +63,14 @@ public class UserProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
 //        Intialise
-        userimage = (CircularImageView) findViewById(R.id.userimage);
-        username = (TextView) findViewById(R.id.username);
-        useremail = (TextView) findViewById(R.id.useremail);
-        option1_text = (TextView) findViewById(R.id.option1_text);
-        option2_text = (TextView) findViewById(R.id.option2_text);
-        option3_text = (TextView) findViewById(R.id.option3_text);
-        option4_text = (TextView) findViewById(R.id.option4_text);
-        option5_text = (TextView) findViewById(R.id.option5_text);
+        userimage = findViewById(R.id.userimage);
+        username = findViewById(R.id.username);
+        useremail = findViewById(R.id.useremail);
+        option1_text = findViewById(R.id.option1_text);
+        option2_text = findViewById(R.id.option2_text);
+        option3_text = findViewById(R.id.option3_text);
+        option4_text = findViewById(R.id.option4_text);
+        option5_text = findViewById(R.id.option5_text);
 
         options1 = new ArrayList<>();
 

@@ -11,10 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.quiz.R;
 import com.example.quiz.activities.QuestionsActivity;
-import com.example.quiz.models.CategoryModel;
 import com.example.quiz.models.CourseModel;
 
 import java.util.List;

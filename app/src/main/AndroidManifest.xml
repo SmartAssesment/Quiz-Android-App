@@ -34,9 +34,6 @@
         <activity
             android:name=".activities.ForgotPasswordActivity"
             android:theme="@style/AppTheme.FullScreen" />
-        <activity
-            android:name=".activities.SurveyWelcomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".activities.LoginActivity" />
         <activity
             android:name=".activities.DashboardActivity"

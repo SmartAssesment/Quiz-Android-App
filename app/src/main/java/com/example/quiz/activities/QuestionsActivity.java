@@ -352,7 +352,7 @@ public class QuestionsActivity extends AppCompatActivity {
             nextActivity();
         }
 //      Generating random level. After adding TensorFlow Lite it will decide next level
-        float inputValues[] = getInputValues();
+        float[] inputValues = getInputValues();
 
         int templevel = level;
         level = doInference(inputValues);
@@ -556,7 +556,7 @@ public class QuestionsActivity extends AppCompatActivity {
             lastresponse = false;
             //incorrect answer
 
-            correctbutton = (Button) optionsContainer.findViewWithTag(qlist.get(position).getOptions().get(pos));
+            correctbutton = optionsContainer.findViewWithTag(qlist.get(position).getOptions().get(pos));
             colorSelectedButton(selectedbutton,false);
             colorSelectedButton(correctbutton,true);
 
@@ -688,14 +688,14 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private int doInference(float[] inputvalues) {
-        float output[][] = new float[1][11];
+        float[][] output = new float[1][11];
         tflite.run(inputvalues, output);
         int inferredval = findclassIndex(output);
         return inferredval;
     }
 
     private int findclassIndex(float[][] output) {
-        float a[] = output[0];
+        float[] a = output[0];
 
         float max = a[0];
         int index = 0;

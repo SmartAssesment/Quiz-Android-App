@@ -89,15 +89,15 @@ public class DashboardActivity extends AppCompatActivity{
 
 
 //        Initialise
-        username = (TextView) findViewById(R.id.username) ;
-        userimg = (CircularImageView) findViewById(R.id.userimg);
-        level_indicator = (TextView) findViewById(R.id.leveltextview);
-        exppoints = (TextView) findViewById(R.id.exppoint);
-        quiztest = (CardView) findViewById(R.id.quiztest);
-        learningpath = (CardView) findViewById(R.id.learningpathcard);
-        testhistory = (CardView) findViewById(R.id.testhist);
-        userprofile = (CardView) findViewById(R.id.userprofile);
-        logout = (CardView) findViewById(R.id.logoutcard);
+        username = findViewById(R.id.username);
+        userimg = findViewById(R.id.userimg);
+        level_indicator = findViewById(R.id.leveltextview);
+        exppoints = findViewById(R.id.exppoint);
+        quiztest = findViewById(R.id.quiztest);
+        learningpath = findViewById(R.id.learningpathcard);
+        testhistory = findViewById(R.id.testhist);
+        userprofile = findViewById(R.id.userprofile);
+        logout = findViewById(R.id.logoutcard);
 
 
 

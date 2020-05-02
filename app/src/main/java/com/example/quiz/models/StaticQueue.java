@@ -2,7 +2,7 @@ package com.example.quiz.models;
 
 public class StaticQueue {
     private  int front, rear, capacity;
-    private  boolean queue[];
+    private boolean[] queue;
 
     public StaticQueue(int c)
     {

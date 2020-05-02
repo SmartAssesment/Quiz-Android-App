@@ -57,7 +57,7 @@ public class SurveyActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
-        stepView = (StepView) findViewById(R.id.step_view);
+        stepView = findViewById(R.id.step_view);
         stepView.setStepsNumber(5);
         stepView.setOnStepClickListener(new StepView.OnStepClickListener() {
             @Override

@@ -28,11 +28,11 @@ public class ScoreActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(ContextCompat.getColor(ScoreActivity.this,R.color.white));// set status background white
 
 
-        TextView scoretext =(TextView) findViewById(R.id.scoretextbox);
-        TextView resulttext =(TextView) findViewById(R.id.resulttext);
-        Button homebtn  = (Button) findViewById(R.id.homebtn);
-        Button reviewbtn  = (Button) findViewById(R.id.reviewbtn);
-        Button learningpath = (Button)findViewById(R.id.learningpathbtn);
+        TextView scoretext = findViewById(R.id.scoretextbox);
+        TextView resulttext = findViewById(R.id.resulttext);
+        Button homebtn  = findViewById(R.id.homebtn);
+        Button reviewbtn  = findViewById(R.id.reviewbtn);
+        Button learningpath = findViewById(R.id.learningpathbtn);
 
         int score = getIntent().getIntExtra("score",0);
         int correctCount = getIntent().getIntExtra("correct_count",0);
